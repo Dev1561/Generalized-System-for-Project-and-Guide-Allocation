@@ -1,0 +1,4 @@
+{% extends 'base.html' %} {% block content %} {% for event in event_data %} Event Title : {{event.Title}}
+<br> Department : {{event.department}}
+<br> Start Date : {{event.start_date}}
+<br> End Date : {{event.end_date}} {% endfor %} {% endblock%}
