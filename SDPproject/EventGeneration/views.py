@@ -13,3 +13,6 @@ def Students(request):
 def Faculty(request):
     event_data = Event.objects.all()
     return render(request, 'show_events.html', {'event_data':event_data})
+
+def home(request):
+    return render(request, 'base.html')

@@ -7,7 +7,7 @@ class User(AbstractUser):
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     roll_no = models.IntegerField()
-    college_id = models.CharField(max_length=10,primary_key=True)
+    #college_id = models.CharField(max_length=10,primary_key=True)
     cpi=models.CharField(max_length=4)
     
 class Event(models.Model):
