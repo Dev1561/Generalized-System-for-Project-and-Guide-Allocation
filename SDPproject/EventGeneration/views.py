@@ -23,11 +23,15 @@ def create_event(request):
         event.department = request.POST['department']
         event.start_date = request.POST['start_date']
         event.end_date = request.POST['end_date']
-        if event.Title == '' or event.department == '' or event.validate_date:
+        if event.Title == '' or event.department == '' or event.start_date == "" or event.end_date == "":
             messages.info(request, 'all fields are mandatory')
             print(event.start_date)
             return redirect('/create_event')
-        event.save()
-        return redirect('/events')
+        elif not event.validate_date:
+            messages.info(request, 'Invalid date')
+            return redirect('/create_event')
+        else:
+            event.save()
+            return redirect('/events')
     else:
         return render(request, 'create_event.html')

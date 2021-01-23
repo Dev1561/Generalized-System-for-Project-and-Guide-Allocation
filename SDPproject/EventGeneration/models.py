@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
+import datetime
 # Create your models here.
 class User(AbstractUser):
     is_student = models.BooleanField(default=True)
@@ -19,6 +20,8 @@ class Event(models.Model):
     
     def validate_date(self):
         if self.start_date == "" or self.end_date == "":
+            return False
+        elif self.start_date < datetime.date.today() or self.end_date < self.start_date:
             return False
         else:
             return True
