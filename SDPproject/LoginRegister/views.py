@@ -12,11 +12,10 @@ def Login(request):
         password = request.POST['password']
         user = auth.authenticate(username = username, password = password)
         if (user is not None) :
-            print("World!!!")
             auth.login(request, user)
             return redirect('/events')
         else:
-            print("Dev")
+            messages.info(request, "Username or password incorrect!!")
             return render(request, 'login.html')
     else:
         print("Parmar")
@@ -34,9 +33,11 @@ def Register(request):
         cpi = request.POST['cpi']
 
         if (username == '' or password == ''):
+            messages.info(request, "Username or password must not be null...")
             return render(request, 'register.html')
         else:
             if User.objects.filter(username = username).exists() :
+                messages.info(request, "User with username already exists...")
                 return render(request, 'register.html')
             else :
                 user, created = User.objects.get_or_create(username = username, email = email, first_name = fname, last_name = lname)
