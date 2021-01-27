@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
-from .models import Student, Event, User
+from .models import Student, Event, User, Mapping
+import csv, io
 
 # Create your views here.
 
@@ -15,6 +16,10 @@ def Students(request):
 # temp view
 def Faculty(request):
     event_data = Event.objects.all()
+    user_id = User.objects.get(username = '18CEUOS111')
+    student = Student.objects.get(user = user_id)
+    print(student.user)
+    print(user_id.is_student)
     return render(request, 'show_events.html', {'event_data': event_data})
 
 def create_event(request):
@@ -24,16 +29,22 @@ def create_event(request):
         event.department = request.POST['department']
         event.start_date = request.POST['start_date']
         event.end_date = request.POST['end_date']
+        csv_file = request.FILES['csv_file']
         if event.Title == '' or event.department == '' or event.start_date == "" or event.end_date == "":
             messages.info(request, 'all fields are mandatory')
-            print(event.start_date)
             return redirect('/create_event')
         elif not event.validate_date():
             messages.info(request, 'Invalid date')
             return redirect('/create_event')
         else:
             event.save()
-            print(type(event.start_date))
+            data = csv_file.read().decode('UTF-8')
+            string_data = io.StringIO(data)
+            next(string_data)
+            for row in csv.reader(string_data):
+                user = User.objects.get(username = row[1])
+                Mapping.objects.create(event_id = event,user_id = user)
+                print(row)
             return redirect('/events')
     else:
         return render(request, 'create_event.html')

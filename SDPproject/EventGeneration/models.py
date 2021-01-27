@@ -7,9 +7,8 @@ class User(AbstractUser):
     is_student = models.BooleanField(default=True)
     
 class Student(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key = True)
     roll_no = models.IntegerField()
-    college_id = models.CharField(max_length=10,primary_key=True)
     cpi=models.CharField(max_length=4)
     
 class Event(models.Model):
@@ -25,3 +24,7 @@ class Event(models.Model):
             return False
         else:
             return True
+
+class Mapping(models.Model):
+    event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
