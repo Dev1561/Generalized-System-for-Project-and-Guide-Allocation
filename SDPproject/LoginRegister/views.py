@@ -14,7 +14,7 @@ def Login(request):
         if (user is not None) :
             print("World!!!")
             auth.login(request, user)
-            return redirect('login/homeview')
+            return redirect('/events')
         else:
             print("Dev")
             return render(request, 'login.html')
@@ -47,12 +47,9 @@ def Register(request):
                 student.roll_no = rollno
                 student.cpi = cpi
                 student.save()
-                return redirect('login/homeview')
+                return redirect('/events')
     else:
         return render(request, 'register.html')
-
-def homeview(request):
-    return redirect('/students')
 
 def logout_user(request):
     logout(request)
