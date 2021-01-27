@@ -1,0 +1,29 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+
+<div class="row">
+  <div class="col-md-4">
+    <form action="login" method="post">
+        {% csrf_token %}
+      <h4> LOGIN FORM </h4>
+      <hr />
+      <div class="form-group">
+        <label name="username"> Username : </label>
+        <input type="text" name="username" class="form-control" required/>
+      </div>
+
+      <div class="form-group">
+        <label name="password"> Password : </label>
+        <input type="password" name="password" class="form-control" required/>
+      </div>
+
+      <div class="form-group">
+          <input type='submit' name='log-in' class='btn btn-primary' value='LogIn' />
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

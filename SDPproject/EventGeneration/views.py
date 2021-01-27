@@ -16,11 +16,10 @@ def Students(request):
 # temp view
 def Faculty(request):
     event_data = Event.objects.all()
-    user_id = User.objects.get(username = '18CEUOS111')
-    student = Student.objects.get(user = user_id)
-    print(student.user)
-    print(user_id.is_student)
-    return render(request, 'show_events.html', {'event_data': event_data})
+    return render(request, 'show_events.html', {'event_data':event_data})
+
+def home(request):
+    return render(request, 'base.html')
 
 def create_event(request):
     if request.method == 'POST':
