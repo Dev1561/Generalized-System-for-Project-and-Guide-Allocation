@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('adminpanel/', include('EventGeneration.urls')),
     path('',include('LoginRegister.urls')),
+    path('',include('ProjectAllocation.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
