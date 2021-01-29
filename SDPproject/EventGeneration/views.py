@@ -50,6 +50,6 @@ def create_event(request):
                 #participant.event_id.add(event)
                 
                 #participant.user_id.add(user)
-            return redirect('adminpanel/events')
+            return redirect('/events')
     else:
         return render(request, 'create_event.html')
