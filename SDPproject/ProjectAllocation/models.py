@@ -16,3 +16,4 @@ class Team(models.Model):
     preference3 = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='pref_3') 
     preference4 = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='pref_4') 
     preference5 = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='pref_5') 
+    highest_cpi = models.CharField(max_length=4)

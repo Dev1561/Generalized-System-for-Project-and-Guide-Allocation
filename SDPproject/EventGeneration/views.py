@@ -15,7 +15,7 @@ def Students(request):
 
 def Faculties(request):
     event_data = Event.objects.all()
-    user_faculty = User.objects.get(username = "prof.PKP")
+    user_faculty = User.objects.get(username = "SDP")
     user_faculty.is_faculty()
     faculty = Faculty.objects.get(user = user_faculty)
     print(faculty.user)

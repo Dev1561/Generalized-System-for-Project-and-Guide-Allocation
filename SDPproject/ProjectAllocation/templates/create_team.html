@@ -1,0 +1,81 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <form action="validate_team" method="POST">
+            {% csrf_token %}
+            <h4> CREATE YOUR TEAM </h4>
+            <hr />
+            <div class="form=group">
+                <label name="members"> Team Members : </label>
+                <input type="text" name="members" class="form-control" required>
+            </div>
+            <br/>
+
+            <div class="form-group">
+                <label name="pref1"> Preference 1 : </label>
+                <select id="project1" name="project1" class="form-control">
+                    <option val="1"> --Select your project-- </option>
+                    {% for project in projects %}
+                    <option class="form-control"> {{project.title}} </p>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label name="pref2"> Preference 2 : </label>
+                <select id="project2" name="project2" class="form-control">
+                    <option val="1"> --Select your project-- </option>
+                    {% for project in projects %}
+                    <option class="form-control"> {{project.title}} </p>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label name="pref3"> Preference 3 : </label>
+                <select id="project3" name="project3" class="form-control">
+                    <option val="1"> --Select your project-- </option>
+                    {% for project in projects %}
+                    <option class="form-control"> {{project.title}} </p>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label name="pref4"> Preference 4 : </label>
+                <select id="project4" name="project4" class="form-control">
+                    <option val="1"> --Select your project-- </option>
+                    {% for project in projects %}
+                    <option class="form-control"> {{project.title}} </p>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label name="pref5"> Preference 5 : </label>
+                <select id="project5" name="project5" class="form-control">
+                    <option val="1"> --Select your project-- </option>
+                    {% for project in projects %}
+                    <option class="form-control"> {{project.title}} </p>
+                    {% endfor %}
+                </select>
+            </div>
+            <br>
+
+            <div class="form-group">
+                <label name="high_cpi"> Highest Cpi : </label>
+                <input type="text" name="high_cpi" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <input type='submit' name='create' class='btn btn-primary' value='Create Team' />
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
