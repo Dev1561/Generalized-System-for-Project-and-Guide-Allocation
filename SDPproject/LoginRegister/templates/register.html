@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <form action="register" method="post" style="margin-top: 50px;">
+            {% csrf_token %}
+            <h4> REGISTER YOURSELF HERE </h4>
+            <hr />
+            <div class="form-group">
+                <label name="username"> Username : </label>
+                <input type="text" name="username" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label name="password"> Password : </label>
+                <input type="password" name="password" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label name="fname"> First Name : </label>
+                <input type="text" name="fname" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label name="lmame"> Last Name : </label>
+                <input type="text" name="lname" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label name="email"> Email ID : </label>
+                <input type="email" name="email" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label name="rollno"> Roll No. : </label>
+                <input type="text" name="rollno" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label name="cpi"> CPI : </label>
+                <input type="text" name="cpi" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <input type='submit' name='register' class='btn btn-primary' value='Register' />
+            </div>
+
+            <div>
+                {% for message in messages %}
+                <h3 style="color: red;"> {{message}} </h3>
+                {% endfor %}
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+{% endblock %}
