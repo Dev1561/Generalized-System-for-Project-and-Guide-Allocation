@@ -23,6 +23,7 @@ def Login(request):
             messages.info(request, "Username or password incorrect!!")
             return render(request, 'login.html')
     else:
+        print("Parmar")
         return render(request, 'login.html')
 
 def Register(request):
@@ -59,6 +60,5 @@ def Register(request):
 def logout_user(request):
     logout(request)
     return render(request, 'logout.html')
-
     
 
