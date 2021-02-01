@@ -22,7 +22,7 @@ def Faculties(request):
     return HttpResponse(user_faculty.is_student)
     #return render(request, 'show_events.html', {'event_data':event_data})
 
-def create_event(request):
+def create_project_assignment(request):
     if request.method == 'POST':
         event = Event()
         event.Title = request.POST['event_title']
@@ -53,3 +53,5 @@ def create_event(request):
             return redirect('/events')
     else:
         return render(request, 'create_event.html')
+
+
