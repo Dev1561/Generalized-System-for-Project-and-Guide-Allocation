@@ -1,0 +1,50 @@
+{% extends 'new_base.html' %}
+
+{% block content %}
+
+    <div class="row align-items-center">
+        <div class="col-md-2"> </div>
+        <div class="col-md-4">
+            <br> <h2> Update Profile </h2> <hr>
+            <form action="profile_updated" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <dt class="control-label text-light"> Username : </dt>
+                    <input type="text" class="form-control" name="username">
+                </div>
+                <div class="form-group">
+                    <dt class="control-label text-light"> First Name : </dt>
+                    <input type="text" class="form-control" name="fname">
+                </div>
+                <div class="form-group">
+                    <dt class="control-label text-light"> Last Name : </dt>
+                    <input type="text" class="form-control" name="lname">
+                </div>
+                <div class="form-group">
+                    <dt class="control-label text-light"> Email ID : </dt>
+                    <input type="email" class="form-control" name="email">
+                </div>
+                <div class="form-group">
+                    <dt class="control-label text-light"> Roll No : </dt>
+                    <input type="text" class="form-control" name="roll_no">
+                </div>
+                <div class="form-group">
+                    <dt class="control-label text-light"> CPI : </dt>
+                    <input type="text" class="form-control" name="cpi">
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Update"> 
+                    <a href="/profile" class="btn btn-dark"> Back to profile </a>
+                </div>
+            </form>
+
+            <div>
+                {% for message in messages %}
+                <h3 style="color: red;"> {{message}} </h3>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

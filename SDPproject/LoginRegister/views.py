@@ -15,15 +15,11 @@ def Login(request):
         if (user is not None) :
             auth.login(request, user)
             print(user.is_authenticated)
-            if(user.is_superuser):
-                return redirect('adminpanel/events')
-            else:
-                return HttpResponse("page is yet to be designed")
+            return redirect('/events')
         else:
             messages.info(request, "Username or password incorrect!!")
             return render(request, 'login.html')
     else:
-        print("Parmar")
         return render(request, 'login.html')
 
 def Register(request):
@@ -60,5 +56,6 @@ def Register(request):
 def logout_user(request):
     logout(request)
     return render(request, 'logout.html')
-    
 
+def homepage(request):
+    return render(request, 'base.html')

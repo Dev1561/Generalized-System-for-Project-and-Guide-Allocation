@@ -34,20 +34,14 @@ def validate_team(request):
         member3 = None
     if(member3 is not None):
         user3 = event_models.User.objects.get(username=member3)
-
-    print(user3)
-    print(user2)
-
+        
     mem1 = event_models.Student.objects.get(user=user1)
     mem2 = event_models.Student.objects.get(user=user2)
     mem3 = None
     if(user3 is not None):
         mem3 = event_models.Student.objects.get(user=user3)
 
-    print(mem3)
-
     print(float(mem1.cpi) - float(mem2.cpi))
-    print(mem2.cpi)
 
     if(mem3 is not None):
         if( ( float(mem1.cpi) - float(mem2.cpi) - float(mem3.cpi) ) > 0.5 ):
