@@ -6,7 +6,7 @@ from EventGeneration import models as event_models
 class Project(models.Model):
     title = models.TextField(max_length=50)
     description = models.TextField(max_length=200)
-    guide = models.ForeignKey(event_models.Faculty, on_delete=models.CASCADE)
+    guide = models.ForeignKey(event_models.Faculty, on_delete=models.CASCADE, null=True)
     own_def = models.BooleanField(default=False)
 
 class Team(models.Model):

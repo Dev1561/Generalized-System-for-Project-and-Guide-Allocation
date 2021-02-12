@@ -84,6 +84,32 @@ def team_created(request):
     # team_data = Team.objects.get()
     return render(request, 'team_created.html')
 
-def allocate_project(request):
+def team_list(request):
     team_data = Team.objects.all()
-    return render(request, 'allocate_project.html', {'team_data':team_data} )
+    return render(request, 'team_list.html', {'team_data':team_data} )
+
+def own_project(request):
+    if(request.method == 'POST'):
+        title = request.POST['title']
+        description = request.POST['description']
+        print(title)
+        # project = Project.objects.get(title=title)
+        if(title == '' or description == ''):
+            messages.info(request, 'Title or description must not be empty!!!')
+            return redirect('/own_project')
+        else:
+            if( Project.objects.filter(title=title).exists() ):
+                messages.info(request, "Project with given title already exists in database!!!")
+                return redirect('/own_project')
+            else:
+                project = Project()
+                project.title = title
+                project.description = description
+                project.own_def = True
+                project.save()
+                
+                # projects = Project.objects.all()
+                faculties = event_models.Faculty.objects.all()
+                return render(request, 'project_added.html', {'faculties':faculties})
+    else:
+        return render(request, 'add_own_project.html')

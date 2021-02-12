@@ -2,6 +2,7 @@
 
 {% block content %}
 
+{% if user.is_authenticated and user.is_student %}
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4">
@@ -78,6 +79,10 @@
                 <input type='submit' name='create' class='btn btn-primary' value='Create Team' />
             </div>
 
+            <div class="form-group">
+                <a href="/own_project" class="btn btn-info"> Add Own Project </a>
+            </div>
+
             <div>
                 {% for message in messages %}
                 <h3 style="color: red;"> {{message}} </h3>
@@ -86,5 +91,11 @@
         </form>
     </div>
 </div>
+
+{% else %}
+    <h3> You are not logged in the system... </h3>
+    <hr/>
+    <h5> <a href="/login" > Click here </a> to Login </h5>
+{% endif %}
 
 {% endblock %}

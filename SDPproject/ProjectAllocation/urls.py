@@ -5,5 +5,6 @@ urlpatterns = [
     path('create_team', views.CreateTeam),
     path('validate_team', views.validate_team),
     path('team_created', views.team_created),
-    path('allocate_project', views.allocate_project),
+    path('team_list', views.team_list),
+    path('own_project', views.own_project),
 ]

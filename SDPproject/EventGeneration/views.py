@@ -19,7 +19,7 @@ def Faculties(request):
     user_faculty.is_faculty()
     faculty = Faculty.objects.get(user = user_faculty)
     print(faculty.user)
-    return HttpResponse(user_faculty.is_student)
+    return render(request, 'faculty_page.html')
     #return render(request, 'show_events.html', {'event_data':event_data})
 
 def create_project_assignment(request):
