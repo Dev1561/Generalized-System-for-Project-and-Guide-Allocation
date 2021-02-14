@@ -1,0 +1,40 @@
+{% extends 'new_base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <form action="faculty_login" method="post" style="margin-top: 50px;">
+            {% csrf_token %}
+            <br/> <h3> LOGIN FORM </h3>
+            <hr />
+            <div class="form-group">
+                <dt name="username" class="control-label text-light"> Username : </dt>
+                <input type="text" name="username" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <dt name="password" class="control-label text-light"> Password : </dt>
+                <input type="password" name="password" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <input type='submit' name='log-in' class='btn btn-primary' value='LogIn' />
+            </div>
+
+            <div>
+                <a href="/register" class="text-dark bg-light"> New User? Register here </a>
+            </div>
+            <div>
+                {% for message in messages %}
+                <h3 style="color: red;"> {{message}} </h3>
+                {% endfor %}
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+
+{% endblock %}

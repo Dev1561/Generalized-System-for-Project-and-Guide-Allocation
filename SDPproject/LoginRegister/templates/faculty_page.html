@@ -1,0 +1,23 @@
+{% extends 'new_base.html' %}
+
+{% block content %}
+
+{% if not user.is_authenticated %}
+    <div class="row" style="padding-top:100px;">
+        <div class="col-md-2"> </div>
+            <div class="com-md-8">
+                <a href="/faculty_login" class="btn btn-success btn-lg" role="button"> Login as Faculty </a>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-2"> </div>
+            <div class="com-md-8">
+                <a href="/faculty_register" class="btn btn-success btn-lg" role="button"> New Faculty? Register here </a>
+            </div>
+        </div>
+    </div>
+    <br/>
+{% endif %}
+{% endblock %}

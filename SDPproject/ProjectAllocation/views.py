@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import AbstractUser
+from hungarian_algorithm import algorithm
 from .models import Project, Team
 from EventGeneration import models as event_models
 
@@ -20,7 +21,11 @@ def validate_team(request):
     pref3 = request.POST['project3']
     pref4 = request.POST['project4']
     pref5 = request.POST['project5']
-
+    print(pref1)
+    print(pref2)
+    print(pref3)
+    print(pref4)
+    print(pref5)
     choice1 = Project.objects.get(title=pref1)
     choice2 = Project.objects.get(title=pref2)
     choice3 = Project.objects.get(title=pref3)
@@ -34,26 +39,21 @@ def validate_team(request):
         member3 = None
     if(member3 is not None):
         user3 = event_models.User.objects.get(username=member3)
-
-    print(user3)
-    print(user2)
-
+        
     mem1 = event_models.Student.objects.get(user=user1)
     mem2 = event_models.Student.objects.get(user=user2)
     mem3 = None
     if(user3 is not None):
         mem3 = event_models.Student.objects.get(user=user3)
 
-    print(mem3)
-
     print(float(mem1.cpi) - float(mem2.cpi))
-    print(mem2.cpi)
 
     if(mem3 is not None):
         if( ( float(mem1.cpi) - float(mem2.cpi) - float(mem3.cpi) ) > 0.5 ):
             messages.info(request, "Team cannot be created")
             return redirect('/create_team')
         else:
+            max_cpi = max(mem1.cpi, mem2.cpi, mem3.cpi)
             team = Team()
             team.member1 = mem1
             team.member2 = mem2
@@ -63,6 +63,7 @@ def validate_team(request):
             team.preference3 = choice3
             team.preference4 = choice4
             team.preference5 = choice5
+            team.highest_cpi = max_cpi
             team.save()
             print("Team Created")
             return redirect('/team_created')
@@ -71,6 +72,7 @@ def validate_team(request):
             messages.info(request, "Team cannot be created")
             return redirect('/create_team')
         else:
+            max_cpi = max(mem1.cpi, mem2.cpi)
             team = Team()
             team.member1 = mem1
             team.member2 = mem2
@@ -80,6 +82,7 @@ def validate_team(request):
             team.preference3 = choice3
             team.preference4 = choice4
             team.preference5 = choice5
+            team.highest_cpi = max_cpi
             team.save()
             print("Team Created")
             return redirect('/team_created')
@@ -90,6 +93,37 @@ def team_created(request):
     # team_data = Team.objects.get()
     return render(request, 'team_created.html')
 
-def allocate_project(request):
+def team_list(request):
     team_data = Team.objects.all()
-    return render(request, 'allocate_project.html', {'team_data':team_data} )
+    return render(request, 'team_list.html', {'team_data':team_data} )
+
+def own_project(request):
+    if(request.method == 'POST'):
+        title = request.POST['title']
+        description = request.POST['description']
+        print(title)
+        # project = Project.objects.get(title=title)
+        if(title == '' or description == ''):
+            messages.info(request, 'Title or description must not be empty!!!')
+            return redirect('/own_project')
+        else:
+            if( Project.objects.filter(title=title).exists() ):
+                messages.info(request, "Project with given title already exists in database!!!")
+                return redirect('/own_project')
+            else:
+                project = Project()
+                project.title = title
+                project.description = description
+                project.own_def = True
+                project.save()
+                
+                # projects = Project.objects.all()
+                faculties = event_models.Faculty.objects.all()
+                return render(request, 'project_added.html', {'faculties':faculties})
+    else:
+        return render(request, 'add_own_project.html')
+
+
+def allocated_projects(request):
+    team_data = Team.objects.all()
+    sorted_team_data = Team.objects.order_by('member1.cpi')

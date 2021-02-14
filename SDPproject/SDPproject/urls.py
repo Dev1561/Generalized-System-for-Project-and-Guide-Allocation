@@ -20,9 +20,11 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('adminpanel/', include('EventGeneration.urls')),
+    path('', include('EventGeneration.urls')),
     path('',include('LoginRegister.urls')),
     path('',include('ProjectAllocation.urls')),
+    path('', include('ProfileManagement.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

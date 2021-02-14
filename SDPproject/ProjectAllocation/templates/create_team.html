@@ -1,30 +1,31 @@
-{% extends 'base.html' %} 
+{% extends 'new_base.html' %} 
 
 {% block content %}
 
+{% if user.is_authenticated and user.is_student %}
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4">
         <form action="validate_team" method="POST">
             {% csrf_token %}
-            <br/> <h3> CREATE YOUR TEAM </h3>
+            <br/> <h2> CREATE YOUR TEAM </h2>
             <hr />
             <div class="form=group">
-                <label name="member1"> Member 1 : </label>
+                <dt class="control-label text-light"> Member 1 : </dt>
                 <input type="text" name="member1" class="form-control" required>
             </div>
             <div class="form=group">
-                <label name="member2"> Member 2 : </label>
+                <dt class="control-label text-light"> Member 2 : </dt>
                 <input type="text" name="member2" class="form-control" required>
             </div>
             <div class="form=group">
-                <label name="member3"> Member 3 : </label>
+                <dt class="control-label text-light"> Member 3 : </dt>
                 <input type="text" name="member3" class="form-control">
             </div>
             <br />
 
             <div class="form-group">
-                <label name="pref1"> Preference 1 : </label>
+                <dt class="control-label text-light"> Preference 1 : </dt>
                 <select id="project1" name="project1" class="form-control">
                     <option val="1"> --Select your project-- </option>
                     {% for project in projects %}
@@ -34,7 +35,7 @@
             </div>
 
             <div class="form-group">
-                <label name="pref2"> Preference 2 : </label>
+                <dt class="control-label text-light"> Preference 2 : </dt>
                 <select id="project2" name="project2" class="form-control">
                     <option val="1"> --Select your project-- </option>
                     {% for project in projects %}
@@ -44,7 +45,7 @@
             </div>
 
             <div class="form-group">
-                <label name="pref3"> Preference 3 : </label>
+                <dt class="control-label text-light"> Preference 3 : </dt>
                 <select id="project3" name="project3" class="form-control">
                     <option val="1"> --Select your project-- </option>
                     {% for project in projects %}
@@ -54,7 +55,7 @@
             </div>
 
             <div class="form-group">
-                <label name="pref4"> Preference 4 : </label>
+                <dt class="control-label text-light"> Preference 4 : </dt>
                 <select id="project4" name="project4" class="form-control">
                     <option val="1"> --Select your project-- </option>
                     {% for project in projects %}
@@ -64,7 +65,7 @@
             </div>
 
             <div class="form-group">
-                <label name="pref5"> Preference 5 : </label>
+                <dt class="control-label text-light"> Preference 5 : </dt>
                 <select id="project5" name="project5" class="form-control">
                     <option val="1"> --Select your project-- </option>
                     {% for project in projects %}
@@ -78,6 +79,10 @@
                 <input type='submit' name='create' class='btn btn-primary' value='Create Team' />
             </div>
 
+            <div class="form-group">
+                <a href="/own_project" class="btn btn-info"> Add Own Project </a>
+            </div>
+
             <div>
                 {% for message in messages %}
                 <h3 style="color: red;"> {{message}} </h3>
@@ -86,5 +91,11 @@
         </form>
     </div>
 </div>
+
+{% else %}
+    <h3> You are not logged in the system... </h3>
+    <hr/>
+    <h5> <a href="/login" > Click here </a> to Login </h5>
+{% endif %}
 
 {% endblock %}

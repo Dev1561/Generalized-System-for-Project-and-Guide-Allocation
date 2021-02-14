@@ -1,0 +1,109 @@
+{% extends 'new_base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <div class="row align-items-center">
+        <div class="col-md-2"> </div>
+        <div class="col-md-8 justify-content-center bg-primary">
+            <br> <br> <h2> Update Profile </h2> <hr>
+            <form action="profile_updated" method="POST">
+                {% csrf_token %}
+                <dl class="row">
+                    <dt class="col-sm-2"> Username : </dt>
+                    <input type="text" class="class-sm-10" name="username">
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-2"> First Name  : </dt>
+                    <input type="text" class="class-sm-10" name="fname">
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-2"> Last Name  : </dt>
+                    <input type="text" class="class-sm-10" name="lname">
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-2"> Email ID  : </dt>
+                    <input type="text" class="class-sm-10" name="email">
+                </dl>
+
+                <!-- <div class="form-group">
+                    <dt class="control-label text-light"> Username : </dt>
+                </div>
+                <div class="form-group">
+                    <dt class="control-label text-light"> First Name : </dt>
+                    <input type="text" class="form-control" name="fname">
+                </div>
+                <div class="form-group">
+                    <dt class="control-label text-light"> Last Name : </dt>
+                    <input type="text" class="form-control" name="lname">
+                </div>
+                <div class="form-group">
+                    <dt class="control-label text-light"> Email ID : </dt>
+                    <input type="email" class="form-control" name="email">
+                </div> -->
+                
+                {% if user.is_student %}
+                    <dl class="row">
+                        <dt class="col-sm-2"> Roll No  : </dt>
+                        <input type="text" class="class-sm-10" name="roll_no">
+                    </dl>
+                    <dl class="row">
+                        <dt class="col-sm-2"> CPI : </dt>
+                        <input type="text" class="class-sm-10" name="cpi">
+                    </dl>
+                    <!-- <div class="form-group">
+                        <dt class="control-label text-light"> Roll No : </dt>
+                        <input type="text" class="form-control" name="roll_no">
+                    </div>
+                    <div class="form-group">
+                        <dt class="control-label text-light"> CPI : </dt>
+                        <input type="text" class="form-control" name="cpi">
+                    </div> -->
+                {% else %}
+                    <dl class="row">
+                        <dt class="col-sm-2"> Designation : </dt>
+                        <input type="text" class="class-sm-10" name="designation">
+                    </dl>
+                    <dl class="row">
+                        <dt class="col-sm-2"> Available : </dt>
+                        <select id="available" name="available">
+                            <option val="1"> --Availability-- </option>
+                            <option val="2"> True </option>
+                            <option val="3"> False </option>
+                        </select>
+                    </dl>
+                    <!-- <div class="form-group">
+                        <dt class="control-label text-light"> Designation : </dt>
+                        <input type="text" class="form-control" name="designation">
+                    </div>
+                    <div class="form-group">
+                        <dt class="control-label text-light"> Available: </dt>
+                        <select id="available" name="available" class="form-control">
+                            <option val="1"> --Availability-- </option>
+                            <option val="2"> --True-- </option>
+                            <option val="3"> --False-- </option>
+                        </select>
+                    </div> -->
+                {% endif %} 
+                <div class="card-footer align-items-center">
+                    <input type="submit" class="btn btn-success" value="Update"> 
+                    <a href="/profile" class="btn btn-dark"> Back to profile </a>
+                </div>
+            </form>
+
+            <div> 
+                {% for message in messages %}
+                <h3 style="color: red;"> {{message}} </h3>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+
+{% else %}
+    <h3> You are not logged in the system... </h3>
+    <hr/>
+    <h5> <a href="/" > Click here </a> to Login </h5>
+{% endif %}
+
+{% endblock %}
