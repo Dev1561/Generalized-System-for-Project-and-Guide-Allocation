@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import AbstractUser
+from hungarian_algorithm import algorithm
 from .models import Project, Team
 from EventGeneration import models as event_models
 
@@ -20,7 +21,11 @@ def validate_team(request):
     pref3 = request.POST['project3']
     pref4 = request.POST['project4']
     pref5 = request.POST['project5']
-
+    print(pref1)
+    print(pref2)
+    print(pref3)
+    print(pref4)
+    print(pref5)
     choice1 = Project.objects.get(title=pref1)
     choice2 = Project.objects.get(title=pref2)
     choice3 = Project.objects.get(title=pref3)
@@ -48,6 +53,7 @@ def validate_team(request):
             messages.info(request, "Team cannot be created")
             return redirect('/create_team')
         else:
+            max_cpi = max(mem1.cpi, mem2.cpi, mem3.cpi)
             team = Team()
             team.member1 = mem1
             team.member2 = mem2
@@ -57,6 +63,7 @@ def validate_team(request):
             team.preference3 = choice3
             team.preference4 = choice4
             team.preference5 = choice5
+            team.highest_cpi = max_cpi
             team.save()
             print("Team Created")
             return redirect('/team_created')
@@ -65,6 +72,7 @@ def validate_team(request):
             messages.info(request, "Team cannot be created")
             return redirect('/create_team')
         else:
+            max_cpi = max(mem1.cpi, mem2.cpi)
             team = Team()
             team.member1 = mem1
             team.member2 = mem2
@@ -74,6 +82,7 @@ def validate_team(request):
             team.preference3 = choice3
             team.preference4 = choice4
             team.preference5 = choice5
+            team.highest_cpi = max_cpi
             team.save()
             print("Team Created")
             return redirect('/team_created')
@@ -113,3 +122,8 @@ def own_project(request):
                 return render(request, 'project_added.html', {'faculties':faculties})
     else:
         return render(request, 'add_own_project.html')
+
+
+def allocated_projects(request):
+    team_data = Team.objects.all()
+    sorted_team_data = Team.objects.order_by('member1.cpi')

@@ -7,4 +7,5 @@ urlpatterns = [
     path('team_created', views.team_created),
     path('team_list', views.team_list),
     path('own_project', views.own_project),
+    path('allocated_projects', views.allocated_projects),
 ]
