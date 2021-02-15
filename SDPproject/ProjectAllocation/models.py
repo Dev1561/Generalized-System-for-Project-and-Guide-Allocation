@@ -19,3 +19,8 @@ class Team(models.Model):
     preference4 = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='pref_4') 
     preference5 = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='pref_5') 
     highest_cpi = models.CharField(max_length=4, null=True)
+
+class Allocated_Project(models.Model):
+    # event_id = models.ForeignKey(event_models.Event, on_delete=models.CASCADE)
+    team_id = models.ForeignKey(Team, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)

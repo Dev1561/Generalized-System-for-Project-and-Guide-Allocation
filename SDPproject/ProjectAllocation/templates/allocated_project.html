@@ -1,0 +1,29 @@
+{% extends 'new_base.html' %}
+
+{% block content %}
+
+<div class="row align-items-center">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 justify-content-center">
+        <table class="table table-dark" style="margin-top: 50px;">
+            <thead>
+                <tr>
+                    <th><h4> Team Members </h4></th>
+                    <th><h4> Allocated Project  </h4></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in allocated_data %} 
+                <tr>
+                    <th>{{project.team_id.member1.user.username}}, {{project.team_id.member2.user.username}} </th>
+                    <th>{{project.project.title}}</th>
+                {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+
+{% endblock %}

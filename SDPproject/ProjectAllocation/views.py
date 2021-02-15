@@ -3,7 +3,8 @@ from django.contrib import messages
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import AbstractUser
 from hungarian_algorithm import algorithm
-from .models import Project, Team
+from .models import Project, Team, Allocated_Project
+from ProjectAllocation.test import *
 from EventGeneration import models as event_models
 
 # Create your views here.
@@ -125,5 +126,39 @@ def own_project(request):
 
 
 def allocated_projects(request):
+    i = 0
     team_data = Team.objects.all()
-    sorted_team_data = Team.objects.order_by('member1.cpi')
+    sorted_team_data = Team.objects.order_by('-highest_cpi')
+    print(sorted_team_data , "\n\n")
+    team_dictionary = { }
+    print("\n", len(sorted_team_data))
+    for i in range (0, len(sorted_team_data)):
+        mydict = { }
+        j = 1
+        mydict.update({ sorted_team_data[i].preference1.title : j+4 })
+        mydict.update({ sorted_team_data[i].preference2.title : j+3 })
+        mydict.update({ sorted_team_data[i].preference3.title : j+2 })
+        mydict.update({ sorted_team_data[i].preference4.title : j+1 })
+        mydict.update({ sorted_team_data[i].preference5.title : j })
+        print(mydict)
+        team_dictionary.update( {sorted_team_data[i].pk : mydict } )
+        i = i + 1
+    
+    test_dictionary = {'Team1': {'Project Allocation System': 5, 'Catering Management System': 4, 'Online Car Rental System': 3, 'Doubt solving platform': 2, 'Restaurant Management System': 1}, 'Team2': {'Online Car Rental System': 5, 'Project Allocation System': 4, 'Matrimonial System': 3, 'Restaurant Management System': 2, 'Catering Management System': 1}, 'Team3': {'Project Allocation System': 5, 'Online Car Rental System': 4, 'Catering Management System': 3, 'Matrimonial System': 2, 'Doubt solving platform': 1}}
+    print("\n")
+    print(allocate_project(test_dictionary), "\n")
+
+    print("\n",  team_dictionary, "\n")
+    allocated = allocate_project(team_dictionary)
+
+    for project in allocated:
+        print("\n", project)
+        allc_proj = Allocated_Project()
+        # allc_proj.event_id = 
+        allc_proj.team_id = Team.objects.get(pk=project[0])
+        allc_proj.project = Project.objects.get(title=project[1])
+        allc_proj.save()
+
+    allocated_data = Allocated_Project.objects.all()
+    print(allocated_data)
+    return render(request, 'allocated_project.html', {'allocated_data':allocated_data})
