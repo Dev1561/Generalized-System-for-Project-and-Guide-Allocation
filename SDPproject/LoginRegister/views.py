@@ -15,7 +15,7 @@ def Login(request):
         if (user is not None) :
             auth.login(request, user)
             print(user.is_authenticated)
-            return redirect('/events')
+            return redirect('/assignments')
         else:
             messages.info(request, "Username or password incorrect!!")
             return render(request, 'login.html')
@@ -49,7 +49,7 @@ def Register(request):
                 student.roll_no = rollno
                 student.cpi = cpi
                 student.save()
-                return redirect('/events')
+                return redirect('/assignments')
     else:
         return render(request, 'register.html')
 
@@ -69,7 +69,7 @@ def faculty_login(request):
             auth.login(request, user)
             print(user.is_authenticated)
             print(user.is_student)
-            return redirect('/team_list')
+            return redirect('/assignments')
         else:
             messages.info(request, "Username or password incorrect!!")
             return render(request, 'faculty_login.html')
@@ -103,6 +103,6 @@ def faculty_register(request):
                 faculty.designation = designation
                 faculty.available = available
                 faculty.save()
-                return redirect('/team_list')
+                return redirect('/assignments')
     else:
         return render(request, 'faculty_register.html')
