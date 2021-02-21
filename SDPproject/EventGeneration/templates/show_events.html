@@ -18,10 +18,14 @@
             <tbody>
                 {% for event in event_data %} 
                 <tr>
-                <th><a href="#"><h5>{{event.Title}}</h5></a></th>
-                <th>{{event.department}}</th>
-                <th>{{event.start_date}}</th>
-                <th>{{event.end_date}}</th>
+                    {% if not user.is_student %}
+                    <th><a href="/team_list"> <h5> {{event.Title}} </h5> </a></th>
+                    {% else %}
+                    <th> <a href="#"> <h5> {{event.Title}} </h5> </a></th>
+                    {% endif %}
+                    <th>{{event.department}}</th>
+                    <th>{{event.start_date}}</th>
+                    <th>{{event.end_date}}</th>
                 {% endfor %}
                 </tr>
             </tbody>

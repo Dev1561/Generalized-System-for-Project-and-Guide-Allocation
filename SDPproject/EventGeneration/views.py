@@ -50,7 +50,7 @@ def create_project_assignment(request):
                 #participant.event_id.add(event)
                 
                 #participant.user_id.add(user)
-            return redirect('/events')
+            return redirect('/assignments')
     else:
         return render(request, 'create_event.html')
 
