@@ -55,3 +55,22 @@ def create_project_assignment(request):
         return render(request, 'create_event.html')
 
 
+def participants(request,pk):
+    event = Event.objects.get(pk=pk)
+    mapped_objects = Mapping.objects.all()
+    students = []
+    faculties = []
+    for obj in list(mapped_objects):
+        #print(obj.event_id)
+        print(obj.user_id)
+        if obj.event_id == event:
+            user = User.objects.get(username=obj.user_id)
+            if user.is_student:
+                stu = Student.objects.get(user=obj.user_id)
+                students.append(stu)
+                #print(stu.roll_no)
+            else:
+                fac = Faculty.objects.get(user=obj.user_id)
+                faculties.append(fac)
+        
+    return render(request, 'participants_list.html', {'students':students, 'faculties':faculties})

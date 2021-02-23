@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import AbstractUser
-from hungarian_algorithm import algorithm
+#from hungarian_algorithm import algorithm
 from .models import Project, Team, Allocated_Project
 from ProjectAllocation.test import *
 from EventGeneration import models as event_models

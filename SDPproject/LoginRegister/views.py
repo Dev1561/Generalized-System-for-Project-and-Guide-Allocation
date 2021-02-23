@@ -49,7 +49,7 @@ def Register(request):
                 student.roll_no = rollno
                 student.cpi = cpi
                 student.save()
-                return redirect('/assignments')
+                return redirect('/login')
     else:
         return render(request, 'register.html')
 
@@ -91,7 +91,7 @@ def faculty_register(request):
             return render(request, 'faculty_register.html')
         else:
             if User.objects.filter(username=username).exists():
-                messsages.info(request, "User already exists with given username!!!")
+                messages.info(request, "User already exists with given username!!!")
                 return render(request, 'faculty_register.html')
             else:
                 user, created = User.objects.get_or_create(username=username, email=email, first_name=fname, last_name=lname)

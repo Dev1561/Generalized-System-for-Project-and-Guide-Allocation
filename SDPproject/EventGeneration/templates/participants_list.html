@@ -1,0 +1,56 @@
+{% extends 'new_base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="row align-items-center">
+    <div class="col-md-1"></div>
+    <div class="col-md-4 justify-content-center">
+        <table class="table table-dark" style="margin-top: 50px;">
+            <thead>
+                <tr>
+                    <th><h4>Student Id</h4></th>
+                    <th><h4>CPI</h4></th>
+                    <th><h4>Roll No</h4></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %} 
+                <tr>
+                    <th><a href="#">{{student.user}}</a></th>
+                    <th>{{student.cpi}}</th>
+                    <th>{{student.roll_no}}</th>
+                {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-4 justify-content-center">
+        <table class="table table-dark" style="margin-top: 50px;">
+            <thead>
+                <tr>
+                    <th><h4>Faculty Id</h4></th>
+                    <th><h4>Designation</h4></th>
+                    <th><h4>Available</h4></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for faculty in faculties %} 
+                <tr>
+                    <th><a href="#">{{faculty.user}}</a></th>
+                    <th>{{faculty.designation}}</th>
+                    <th>{{faculty.available}}</th>
+                {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6"></div>
+</div>
+
+{% else %}
+    <h3> You are not logged in the system... </h3>
+    <hr/>
+    <h5> <a href="/login" > Click here </a> to Login </h5>
+{% endif %}
+
+{% endblock %}
