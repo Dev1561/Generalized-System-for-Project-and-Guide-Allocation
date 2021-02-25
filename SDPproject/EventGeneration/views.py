@@ -6,12 +6,32 @@ import csv
 import io
 
 # Create your views here.
-def Students(request):
+def ListAssignments(request):
     # spu = User.objects.get(username="jay")
     # spu.is_student = False
     # spu.save(update_fields=['is_student'])
     event_data = Event.objects.all()
     return render(request, 'show_events.html', {'event_data':event_data})
+
+def participants(request,pk):
+    event = Event.objects.get(pk=pk)
+    mapped_objects = Mapping.objects.all()
+    students = []
+    faculties = []
+    for obj in list(mapped_objects):
+        #print(obj.event_id)
+        print(obj.user_id)
+        if obj.event_id == event:
+            user = User.objects.get(username=obj.user_id)
+            if user.is_student:
+                stu = Student.objects.get(user=obj.user_id)
+                students.append(stu)
+                #print(stu.roll_no)
+            else:
+                fac = Faculty.objects.get(user=obj.user_id)
+                faculties.append(fac)
+        
+    return render(request, 'participants_list.html', {'students':students, 'faculties':faculties})
 
 def Faculties(request):
     event_data = Event.objects.all()
@@ -21,6 +41,10 @@ def Faculties(request):
     print(faculty.user)
     return render(request, 'faculty_page.html')
     #return render(request, 'show_events.html', {'event_data':event_data})
+    
+def Students(request):
+    students_list = Student.objects.all()
+    return render(request, 'student_list.html', {'students':students_list})
 
 def create_project_assignment(request):
     if request.method == 'POST':
@@ -55,22 +79,3 @@ def create_project_assignment(request):
         return render(request, 'create_event.html')
 
 
-def participants(request,pk):
-    event = Event.objects.get(pk=pk)
-    mapped_objects = Mapping.objects.all()
-    students = []
-    faculties = []
-    for obj in list(mapped_objects):
-        #print(obj.event_id)
-        print(obj.user_id)
-        if obj.event_id == event:
-            user = User.objects.get(username=obj.user_id)
-            if user.is_student:
-                stu = Student.objects.get(user=obj.user_id)
-                students.append(stu)
-                #print(stu.roll_no)
-            else:
-                fac = Faculty.objects.get(user=obj.user_id)
-                faculties.append(fac)
-        
-    return render(request, 'participants_list.html', {'students':students, 'faculties':faculties})

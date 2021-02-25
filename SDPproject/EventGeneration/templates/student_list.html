@@ -1,0 +1,39 @@
+{% extends 'new_base.html' %} 
+
+{% block content %}
+
+{% if user.is_authenticated and user.is_superuser %}
+<div class="row align-items-center">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 justify-content-center">
+        <table class="table table-dark" style="margin-top: 50px;">
+            <thead>
+                <tr>
+                    <th><h4>Username</h4></th>
+                    <th><h4>First Name</h4></th>
+                    <th><h4>Last Name</h4></th>
+                    <th><h4>Roll No</h4></th>
+                    <th><h4>CPI</h4></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %} 
+                <tr>
+                    <th>{{student.user}}</th>
+                    <th>{{student.user.first_name}}</th>
+                    <th>{{student.user.last_name}}</th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+{% else %}
+    <h3> You are not logged in as ADMIN in the system... </h3>
+    <hr/>
+    <h5> <a href="/login" > Click here </a> to Login </h5>
+{% endif %}
+
+{% endblock%}

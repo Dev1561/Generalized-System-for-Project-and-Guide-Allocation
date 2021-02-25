@@ -4,7 +4,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import AbstractUser
 #from hungarian_algorithm import algorithm
 from .models import Project, Team, Allocated_Project
-from ProjectAllocation.test import *
+from ProjectAllocation import allocate
 from EventGeneration import models as event_models
 
 # Create your views here.
@@ -146,10 +146,10 @@ def allocated_projects(request):
     
     test_dictionary = {'Team1': {'Project Allocation System': 5, 'Catering Management System': 4, 'Online Car Rental System': 3, 'Doubt solving platform': 2, 'Restaurant Management System': 1}, 'Team2': {'Online Car Rental System': 5, 'Project Allocation System': 4, 'Matrimonial System': 3, 'Restaurant Management System': 2, 'Catering Management System': 1}, 'Team3': {'Project Allocation System': 5, 'Online Car Rental System': 4, 'Catering Management System': 3, 'Matrimonial System': 2, 'Doubt solving platform': 1}}
     print("\n")
-    print(allocate_project(test_dictionary), "\n")
+    print(allocate.allocate_project(test_dictionary), "\n")
 
     print("\n",  team_dictionary, "\n")
-    allocated = allocate_project(team_dictionary)
+    allocated = allocate.allocate_project(team_dictionary)
 
     for project in allocated:
         print("\n", project)
