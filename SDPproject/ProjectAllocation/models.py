@@ -25,6 +25,9 @@ class Team(models.Model):
 class Guide_Pref(models.Model):
      student = models.ForeignKey(event_models.Student, on_delete=models.CASCADE)
      project = models.ForeignKey(Project, on_delete=models.CASCADE)
+     guide_1 = models.ForeignKey(event_models.Faculty, on_delete=models.CASCADE, related_name='guide_1')
+     guide_2 = models.ForeignKey(event_models.Faculty, on_delete=models.CASCADE, related_name='guide_2')
+     guide_3 = models.ForeignKey(event_models.Faculty, on_delete=models.CASCADE, related_name='guide_3')
 
 class Allocated_Project(models.Model):
     event_id = models.ForeignKey(event_models.Event, on_delete=models.CASCADE)

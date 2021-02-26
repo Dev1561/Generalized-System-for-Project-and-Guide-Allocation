@@ -24,9 +24,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
+                    {% if user.is_superuser %}
                     <a class="nav-item nav-link active" href="/assignments">Assignments <span class="sr-only">(current)</span></a>
                     <a class="nav-item nav-link" href="/students">Students</a>
                     <a class="nav-item nav-link" href="/faculties">Faculties</a>
+                    <a class="nav-item nav-link" href="/create_project_assignment">Add assignment</a>
+                    {% endif %}
                 </div>
             </div>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
