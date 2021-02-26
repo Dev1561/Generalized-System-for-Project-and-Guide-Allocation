@@ -12,20 +12,24 @@
                     <th><h4>Username</h4></th>
                     <th><h4>First Name</h4></th>
                     <th><h4>Last Name</h4></th>
-                    <th><h4>Roll No</h4></th>
-                    <th><h4>CPI</h4></th>
+                    <th><h4>Designation</h4></th>
+                    <th><h4>Available</h4></th>
                     <th><h4>E-mail</h4></th>
                 </tr>
             </thead>
             <tbody>
-                {% for student in students %} 
+                {% for faculty in faculties %} 
                 <tr>
-                    <th>{{student.user}}</th>
-                    <th>{{student.user.first_name}}</th>
-                    <th>{{student.user.last_name}}</th>
-                    <th>{{student.roll_no}}</th>
-                    <th>{{student.cpi}}</th>
-                    <th>{{student.user.email}}</th>
+                    <th>{{faculty.user}}</th>
+                    <th>{{faculty.user.first_name}}</th>
+                    <th>{{faculty.user.last_name}}</th>
+                    <th>{{faculty.designation}}</th>
+                    {% if faculty.available %}
+                    <th>Yes</th>
+                    {% else %}
+                    <th>No</th>
+                    {% endif %}
+                    <th>{{faculty.user.email}}</th>
                     <th><button>Edit</button></th>
                     <th><button>delete</button></th>
                 </tr>

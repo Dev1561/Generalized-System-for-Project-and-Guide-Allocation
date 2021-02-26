@@ -7,11 +7,20 @@ class User(AbstractUser):
     
     def is_faculty(self):
         self.is_student = False
+        
+    def get_first_name(self):
+        return self.get_short_name()
+    
+    def get_last_name(self):
+        name = str(self.get_full_name())
+        last_name = name.split()[1]
+        return last_name
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     roll_no = models.IntegerField()
     cpi=models.CharField(max_length=4)
+    in_team = models.BooleanField(default=False)
     
 class Faculty(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key = True)
@@ -28,6 +37,7 @@ class Event(models.Model):
     department = models.CharField(max_length=100)
     start_date = models.DateField()
     end_date = models.DateField()
+    event_head = models.ForeignKey(Faculty, on_delete=models.CASCADE, null=True)
     
     def validate_date(self):
         if self.start_date == "" or self.end_date == "":

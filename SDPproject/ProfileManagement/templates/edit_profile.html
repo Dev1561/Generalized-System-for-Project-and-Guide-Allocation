@@ -11,19 +11,19 @@
                 {% csrf_token %}
                 <dl class="row">
                     <dt class="col-sm-2"> Username : </dt>
-                    <input type="text" class="class-sm-10" name="username">
+                    <input type="text" class="class-sm-10" name="username" value={{user.get_username}}>
                 </dl>
                 <dl class="row">
                     <dt class="col-sm-2"> First Name  : </dt>
-                    <input type="text" class="class-sm-10" name="fname">
+                    <input type="text" class="class-sm-10" name="fname" value="{{user.get_first_name}}">
                 </dl>
                 <dl class="row">
                     <dt class="col-sm-2"> Last Name  : </dt>
-                    <input type="text" class="class-sm-10" name="lname">
+                    <input type="text" class="class-sm-10" name="lname" value="{{user.get_last_name}}">
                 </dl>
                 <dl class="row">
                     <dt class="col-sm-2"> Email ID  : </dt>
-                    <input type="text" class="class-sm-10" name="email">
+                    <input type="text" class="class-sm-10" name="email" value="">
                 </dl>
 
                 <!-- <div class="form-group">
@@ -45,11 +45,11 @@
                 {% if user.is_student %}
                     <dl class="row">
                         <dt class="col-sm-2"> Roll No  : </dt>
-                        <input type="text" class="class-sm-10" name="roll_no">
+                        <input type="text" class="class-sm-10" name="roll_no" value="{{loggedin_user.roll_no}}">
                     </dl>
                     <dl class="row">
                         <dt class="col-sm-2"> CPI : </dt>
-                        <input type="text" class="class-sm-10" name="cpi">
+                        <input type="text" class="class-sm-10" name="cpi" value="{{loggedin_user.cpi}}">
                     </dl>
                     <!-- <div class="form-group">
                         <dt class="control-label text-light"> Roll No : </dt>

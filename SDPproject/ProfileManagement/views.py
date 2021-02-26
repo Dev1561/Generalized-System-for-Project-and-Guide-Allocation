@@ -90,4 +90,9 @@ def profile_updated(request):
 
 
 def edit_profile(request):
-    return render(request, 'edit_profile.html')
+    print(request.user)
+    if request.user.is_student:
+        user = event_models.Student.objects.get(user = request.user)
+    elif not request.user.is_student:
+        user = event_models.Faculty.objects.get(user = request.user)
+    return render(request, 'edit_profile.html', {'loggedin_user':user})

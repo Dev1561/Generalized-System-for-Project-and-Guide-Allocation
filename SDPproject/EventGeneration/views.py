@@ -34,16 +34,22 @@ def participants(request,pk):
     return render(request, 'participants_list.html', {'students':students, 'faculties':faculties})
 
 def Faculties(request):
-    event_data = Event.objects.all()
-    user_faculty = User.objects.get(username = "SDP")
-    user_faculty.is_faculty()
-    faculty = Faculty.objects.get(user = user_faculty)
-    print(faculty.user)
-    return render(request, 'faculty_page.html')
+    # event_data = Event.objects.all()
+    # user_faculty = User.objects.get(username = "SDP")
+    # user_faculty.is_faculty()
+    # faculty = Faculty.objects.get(user = user_faculty)
+    # print(faculty.user)
+    # return render(request, 'faculty_list.html')
     #return render(request, 'show_events.html', {'event_data':event_data})
+    faculties = Faculty.objects.all()
+    faculty_list = list(faculties)
+    faculty_list.sort(key = lambda Faculty: Faculty.user.first_name)
+    return render(request, 'faculty_list.html', {'faculties':faculty_list})
     
 def Students(request):
-    students_list = Student.objects.all()
+    students = Student.objects.all()
+    students_list = list(students)
+    students_list.sort(key = lambda Student: Student.user.first_name)
     return render(request, 'student_list.html', {'students':students_list})
 
 def create_project_assignment(request):
