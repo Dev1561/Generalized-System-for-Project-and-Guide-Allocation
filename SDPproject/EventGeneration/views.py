@@ -59,8 +59,11 @@ def create_project_assignment(request):
         event.department = request.POST['department']
         event.start_date = request.POST['start_date']
         event.end_date = request.POST['end_date']
+        event_head = request.POST['event_head']
+        user = User.objects.get(username = event_head)
+        event.event_head = Faculty.objects.get(user = user)
         csv_file = request.FILES.get('file', False)
-        if event.Title == '' or event.department == '' or event.start_date == "" or event.end_date == "":
+        if event.Title == '' or event.department == '' or event.start_date == "" or event.end_date == "" or event.event_head == None:
             messages.info(request, 'all fields are mandatory')
             print(event.start_date)
             return redirect('/create_event')
