@@ -3,17 +3,17 @@ from django.contrib import messages
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import AbstractUser
 #from hungarian_algorithm import algorithm
-from .models import Project, Team, Allocated_Project
+from .models import Project, Team, Allocated_Project, Guide_Pref
 from ProjectAllocation import allocate
 from EventGeneration import models as event_models
 
 # Create your views here.
 
-def CreateTeam(request):
+def CreateTeam(request,pk):
     projects = Project.objects.all()
     return render(request, 'create_team.html', {'projects':projects})
 
-def validate_team(request):
+def validate_team(request,pk):
     member1 = request.POST['member1']
     member2 = request.POST['member2']
     member3 = request.POST['member3']
@@ -98,14 +98,17 @@ def team_list(request):
     team_data = Team.objects.all()
     return render(request, 'team_list.html', {'team_data':team_data} )
 
-def own_project(request):
+def own_project(request,pk):
     if(request.method == 'POST'):
         title = request.POST['title']
         description = request.POST['description']
+        guide_1 = request.POST['guide_1']
+        guide_2 = request.POST['guide_2']
+        guide_3 = request.POST['guide_3']
         print(title)
         # project = Project.objects.get(title=title)
-        if(title == '' or description == ''):
-            messages.info(request, 'Title or description must not be empty!!!')
+        if(title == '' or description == '' or guide_1 == '' or guide_2 == '' or guide_3 == ''):
+            messages.info(request, 'all fields are compulsory')
             return redirect('/own_project')
         else:
             if( Project.objects.filter(title=title).exists() ):
@@ -116,13 +119,36 @@ def own_project(request):
                 project.title = title
                 project.description = description
                 project.own_def = True
+                current_user = event_models.User.objects.get(username=request.user)
+                current_stu = event_models.Student.objects.get(user=current_user)
+                project.owner = current_stu
                 project.save()
                 
+                guide_pref = Guide_Pref()
+                guide_pref.student = current_stu
+                guide_pref.project = project
+                user1 = event_models.User.objects.get(username=guide_1)
+                guide1 = event_models.Faculty.objects.get(user=user1)
+                guide_pref.guide_1 = guide1
+                user2 = event_models.User.objects.get(username=guide_2)
+                guide2 = event_models.Faculty.objects.get(user=user2)
+                guide_pref.guide_2 = guide2
+                user3 = event_models.User.objects.get(username=guide_3)
+                guide3 = event_models.Faculty.objects.get(user=user3)
+                guide_pref.guide_3 = guide3
+                guide_pref.save()
                 # projects = Project.objects.all()
-                faculties = event_models.Faculty.objects.all()
-                return render(request, 'project_added.html', {'faculties':faculties})
+                #faculties = event_models.Faculty.objects.all()
+                return redirect("/my_assignments")
     else:
-        return render(request, 'add_own_project.html')
+        event = event_models.Event.objects.get(pk=pk)
+        mappings = event_models.Mapping.objects.filter(event_id=event)
+        faculties = []
+        for mapping in mappings:
+            print(type(mapping.user_id))
+            if not mapping.user_id.is_student:
+                faculties.append(mapping.user_id.username)
+        return render(request, 'add_own_project.html', {'faculties':faculties})
 
 
 def allocated_projects(request):
@@ -162,3 +188,29 @@ def allocated_projects(request):
     allocated_data = Allocated_Project.objects.all()
     print(allocated_data)
     return render(request, 'allocated_project.html', {'allocated_data':allocated_data})
+
+def guide_request(request):
+    prefernces = Guide_Pref.objects.all()
+    teams = Team.objects.all()
+    user = event_models.User.objects.get(username=request.user)
+    current_fac = event_models.Faculty.objects.get(user=user)
+    req = []
+    if request.method == "GET":
+        for pref in prefernces:
+            if pref.guide_1 == current_fac or pref.guide_2 == current_fac or pref.guide_3 == current_fac:
+                l = []
+                l.append(pref)
+                stu = pref.student
+                for team in teams:
+                    if team.member1 == stu or team.member2 == stu or team.member3 == stu:
+                        l.append(team)
+                req.append(l)
+                
+        if len(req) == 0:
+            messages.info(request, 'no pending guide requests for you.')
+            return redirect("/...")
+        else:
+            return render(request, 'requests.html', {'requests':req})
+    else:
+        if "accept" in request.POST:
+            pass

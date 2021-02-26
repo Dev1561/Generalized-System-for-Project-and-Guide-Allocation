@@ -16,7 +16,11 @@
             <tbody>
                 {% for student in students %} 
                 <tr>
+                    {% if user.is_superuser %}
                     <th><a href="#">{{student.user}}</a></th>
+                    {% else %}
+                    <th>{{student.user}}</th>
+                    {% endif %}
                     <th>{{student.cpi}}</th>
                     <th>{{student.roll_no}}</th>
                 {% endfor %}
@@ -36,7 +40,11 @@
             <tbody>
                 {% for faculty in faculties %} 
                 <tr>
+                    {% if user.is_superuser %}
                     <th><a href="#">{{faculty.user}}</a></th>
+                    {% else %}
+                    <th>{{faculty.user}}</th>
+                    {% endif %}
                     <th>{{faculty.designation}}</th>
                     <th>{{faculty.available}}</th>
                 {% endfor %}
