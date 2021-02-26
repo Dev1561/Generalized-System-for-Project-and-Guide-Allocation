@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from django.contrib.auth import logout
+from EventGeneration import models as event_models
 
 from EventGeneration.models import User, Student, Faculty
 # Create your views here.
@@ -15,12 +16,50 @@ def Login(request):
         if (user is not None) :
             auth.login(request, user)
             print(user.is_authenticated)
-            return redirect('/assignments')
+            if user.is_superuser:
+                return redirect('/assignments')
+            else:
+                return redirect('/my_assignments')
         else:
             messages.info(request, "Username or password incorrect!!")
             return render(request, 'login.html')
     else:
         return render(request, 'login.html')
+
+def show_my_events(request):
+    mappings = event_models.Mapping.objects.all()
+    #print(mappings)
+    my_events = []
+    for mapping in mappings:
+        #print(mapping.event_id)
+        if mapping.user_id == request.user:
+            event_obj = mapping.event_id
+            event = event_models.Event.objects.get(pk=event_obj.id)
+            my_events.append(event)
+    print(my_events)
+    return render(request, 'my_events.html', {'my_events':my_events})
+
+# def my_event(request,pk):
+#     event = Event.objects.get(pk=pk)
+#     mapped_objects = Mapping.objects.all()
+#     students = []
+#     faculties = []
+#     for obj in list(mapped_objects):
+#         #print(obj.event_id)
+#         print(obj.user_id)
+#         if obj.event_id == event:
+#             user = User.objects.get(username=obj.user_id)
+#             if user.is_student:
+#                 stu = Student.objects.get(user=obj.user_id)
+#                 students.append(stu)
+#                 #print(stu.roll_no)
+#             else:
+#                 fac = Faculty.objects.get(user=obj.user_id)
+#                 faculties.append(fac)
+        
+#     return render(request, 'participants_list.html', {'students':students, 'faculties':faculties})
+    
+    
 
 def Register(request):
     
@@ -69,7 +108,7 @@ def faculty_login(request):
             auth.login(request, user)
             print(user.is_authenticated)
             print(user.is_student)
-            return redirect('/assignments')
+            return redirect('/my_assignments')
         else:
             messages.info(request, "Username or password incorrect!!")
             return render(request, 'faculty_login.html')

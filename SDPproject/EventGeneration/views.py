@@ -66,10 +66,10 @@ def create_project_assignment(request):
         if event.Title == '' or event.department == '' or event.start_date == "" or event.end_date == "" or event.event_head == None:
             messages.info(request, 'all fields are mandatory')
             print(event.start_date)
-            return redirect('/create_event')
+            return redirect('/create_project_assignment')
         elif not event.validate_date():
             messages.info(request, 'Invalid date')
-            return redirect('/create_event')
+            return redirect('/create_project_assignment')
         else:
             event.save()
             data = csv_file.read().decode('UTF-8')
