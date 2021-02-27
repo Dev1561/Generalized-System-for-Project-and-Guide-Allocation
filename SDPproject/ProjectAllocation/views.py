@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib import messages
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, HttpResponse
 from django.contrib.auth.models import AbstractUser
 #from hungarian_algorithm import algorithm
 from .models import Project, Team, Allocated_Project, Guide_Pref
@@ -10,8 +10,34 @@ from EventGeneration import models as event_models
 # Create your views here.
 
 def CreateTeam(request,pk):
-    projects = Project.objects.all()
-    return render(request, 'create_team.html', {'projects':projects})
+    curr_event = event_models.Event.objects.get(pk=pk)
+    teams = Team.objects.filter(event=curr_event)
+    curr_user = event_models.User.objects.get(username=request.user)
+    stu = event_models.Student.objects.get(user=curr_user)
+    Flag = False
+    for team in teams:
+        if team.member1 == stu or team.member2 == stu or team.member3 == stu:
+            Flag = True
+            break
+    if Flag == True:
+        return HttpResponse("you are already a part of team")
+    else:
+        mappings = event_models.Mapping.objects.filter(event_id=curr_event)
+        facs = []
+        for mapping in mappings:
+            user = event_models.User.objects.get(username=mapping.user_id)
+            if not user.is_student:
+                faculty = event_models.Faculty.objects.get(user=user)
+                facs.append(faculty)
+        projects = []
+        for fac in facs:
+            ps = list(Project.objects.filter(guide=fac))
+            for p in ps:
+                projects.append(p)
+        my_projects = list(Project.objects.filter(owner=curr_user))
+        for proj in my_projects:
+            projects.append(proj)
+        return render(request, 'create_team.html', {'projects':projects,'flag':Flag})
 
 def validate_team(request,pk):
     member1 = request.POST['member1']
@@ -56,6 +82,8 @@ def validate_team(request,pk):
         else:
             max_cpi = max(mem1.cpi, mem2.cpi, mem3.cpi)
             team = Team()
+            curr_event = event_models.Event.objects.get(pk=pk)
+            team.event = curr_event
             team.member1 = mem1
             team.member2 = mem2
             team.member3 = mem3
@@ -121,7 +149,7 @@ def own_project(request,pk):
                 project.own_def = True
                 current_user = event_models.User.objects.get(username=request.user)
                 current_stu = event_models.Student.objects.get(user=current_user)
-                project.owner = current_stu
+                project.owner = current_user
                 project.save()
                 
                 guide_pref = Guide_Pref()
@@ -142,13 +170,24 @@ def own_project(request,pk):
                 return redirect("/my_assignments")
     else:
         event = event_models.Event.objects.get(pk=pk)
-        mappings = event_models.Mapping.objects.filter(event_id=event)
-        faculties = []
-        for mapping in mappings:
-            print(type(mapping.user_id))
-            if not mapping.user_id.is_student:
-                faculties.append(mapping.user_id.username)
-        return render(request, 'add_own_project.html', {'faculties':faculties})
+        teams = Team.objects.filter(event=event)
+        curr_user = event_models.User.objects.get(username=request.user)
+        stu = event_models.Student.objects.get(user=curr_user)
+        Flag = False
+        for team in teams:
+            if team.member1 == stu or team.member2 == stu or team.member3 == stu:
+                Flag = True
+                break
+        if Flag == True:
+            return HttpResponse("you are already a part of team")
+        else:
+            mappings = event_models.Mapping.objects.filter(event_id=event)
+            faculties = []
+            for mapping in mappings:
+                print(type(mapping.user_id))
+                if not mapping.user_id.is_student:
+                    faculties.append(mapping.user_id.username)
+            return render(request, 'add_own_project.html', {'faculties':faculties})
 
 
 def allocated_projects(request):
@@ -189,7 +228,7 @@ def allocated_projects(request):
     print(allocated_data)
     return render(request, 'allocated_project.html', {'allocated_data':allocated_data})
 
-def guide_request(request):
+def guide_requests(request):
     prefernces = Guide_Pref.objects.all()
     teams = Team.objects.all()
     user = event_models.User.objects.get(username=request.user)
@@ -208,9 +247,19 @@ def guide_request(request):
                 
         if len(req) == 0:
             messages.info(request, 'no pending guide requests for you.')
-            return redirect("/...")
+            return redirect("/my_assignments")
         else:
             return render(request, 'requests.html', {'requests':req})
+        
+def process_request(request,pk):
+    guide_pref = Guide_Pref.objects.get(pk=pk)
+    if request.method == "POST":
+        project = guide_pref.project
+        final_user = event_models.User.objects.get(username=request.user)
+        final_guide = event_models.Faculty.objects.get(user=final_user)
+        project.guide = final_guide
+        project.save(update_fields=['guide'])
+        guide_pref.delete()
+        return redirect('/guide_requests')
     else:
-        if "accept" in request.POST:
-            pass
+        return render(request, 'request.html', {'guide_pref':guide_pref})

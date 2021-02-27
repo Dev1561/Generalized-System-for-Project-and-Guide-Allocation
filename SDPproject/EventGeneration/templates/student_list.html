@@ -20,14 +20,14 @@
             <tbody>
                 {% for student in students %} 
                 <tr>
-                    <th>{{student.user}}</th>
+                    <th><a href="/admin/EventGeneration/student/{{student.pk}}">{{student.user}}</a></th>
                     <th>{{student.user.first_name}}</th>
                     <th>{{student.user.last_name}}</th>
                     <th>{{student.roll_no}}</th>
                     <th>{{student.cpi}}</th>
                     <th>{{student.user.email}}</th>
-                    <th><button>Edit</button></th>
-                    <th><button>delete</button></th>
+                    <!-- <th><button>Edit</button></th>
+                    <th><button>delete</button></th> -->
                 </tr>
                 {% endfor %}
             </tbody>

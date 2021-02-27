@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from .models import Student, Event, User, Mapping, Faculty
+from ProjectAllocation.models import Project
 import csv
 import io
 
@@ -51,6 +52,10 @@ def Students(request):
     students_list = list(students)
     students_list.sort(key = lambda Student: Student.user.first_name)
     return render(request, 'student_list.html', {'students':students_list})
+
+def projects(request):
+    projects = Project.objects.all()
+    return render(request, 'projects.html', {'projects':projects})
 
 def create_project_assignment(request):
     if request.method == 'POST':

@@ -8,7 +8,7 @@ class Project(models.Model):
     description = models.TextField(max_length=200)
     guide = models.ForeignKey(event_models.Faculty, on_delete=models.CASCADE, null=True)
     own_def = models.BooleanField(default=False)
-    owner = models.ForeignKey(event_models.Student, on_delete=models.CASCADE, default=None, null=True)
+    owner = models.ForeignKey(event_models.User, on_delete=models.CASCADE, default=None, null=True)
 
 class Team(models.Model):
     event = models.ForeignKey(event_models.Event, on_delete=models.CASCADE)
