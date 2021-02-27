@@ -17,7 +17,7 @@
                 {% for student in students %} 
                 <tr>
                     {% if user.is_superuser %}
-                    <th><a href="#">{{student.user}}</a></th>
+                    <th>{{student.user}}</th>
                     {% else %}
                     <th>{{student.user}}</th>
                     {% endif %}
@@ -41,7 +41,7 @@
                 {% for faculty in faculties %} 
                 <tr>
                     {% if user.is_superuser %}
-                    <th><a href="#">{{faculty.user}}</a></th>
+                    <th>{{faculty.user}}</th>
                     {% else %}
                     <th>{{faculty.user}}</th>
                     {% endif %}

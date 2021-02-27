@@ -35,6 +35,9 @@
                 </tr>
             </tbody>
         </table>
+        {% for message in messages %}
+        <h3 style="color: red;"> {{message}} </h3>
+        {% endfor %}
     </div>
     <div class="col-md-2"></div>
 </div>

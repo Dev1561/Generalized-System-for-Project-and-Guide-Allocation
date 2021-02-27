@@ -6,6 +6,7 @@ urlpatterns = [
     path('assignment/<int:pk>', views.participants),
     path('faculties', views.Faculties),
     path('students', views.Students),
+    path('projects', views.projects),
     path('create_project_assignment', views.create_project_assignment),
     
 ]

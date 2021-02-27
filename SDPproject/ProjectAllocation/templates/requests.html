@@ -8,37 +8,16 @@
             <br/> <br/> <h2> guide requests </h2>
             <hr/>
             {% for request in requests %}
-            <form action="" method="POST">
-                {% csrf_token %}
             <dl class="row">
                 <dt class="col-sm-2">
-                    event Title : 
+                    event Title : {{request.1.event.Title}}
                 </dt>
-                <dd class="col-sm-10 text-light"> 
-                    {{request.1.event.Title}}
-                </dd>
                 <dt class="col-sm-2">
-                    team members : 
+                    team members : {{request.1.member1.user.username}},{{request.1.member2.user.username}},{{request.1.member3.user.username}}
                 </dt>
-                <dd class="col-sm-10 text-light"> 
-                    {{request.1.member1.user.username}},{{request.1.member2.user.username}},{{request.1.member3.user.username}}
-                </dd>
-                <dt class="col-sm-2">
-                    Project Title : 
-                </dt>
-                <dd class="col-sm-10 text-light"> 
-                    {{request.0.project.title}}
-                </dd>
-                <dt class="col-sm-2">
-                    Description : 
-                </dt>
-                <dd class="col-sm-10 text-light"> 
-                    {{request.0.project.description}}
-                </dd>
             </dl>
             <div class="card-footer">
-                <input type="submit" class="btn btn-success" value="accept" name="accept">
-                <input type="submit" class="btn btn-danger" value="reject" name="reject">
+                <a href="/guide_request/{{request.0.id}}" class="btn btn-primary">view</a>
             </div>
             </form>
             {% endfor %}

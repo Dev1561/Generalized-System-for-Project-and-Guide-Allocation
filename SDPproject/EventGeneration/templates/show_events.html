@@ -13,6 +13,7 @@
                     <th><h4>Department</h4></th>
                     <th><h4>Starting Date</h4></th>
                     <th><h4>Ending Date</h4></th>
+                    <th><h4>Event Head</h4></th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +27,8 @@
                     <th>{{event.department}}</th>
                     <th>{{event.start_date}}</th>
                     <th>{{event.end_date}}</th>
+                    <th>{{event.event_head.user.username}}</th>
+                    <th><a href="/admin/EventGeneration/event/{{event.pk}}/delete">delete</a></th>
                 {% endfor %}
                 </tr>
             </tbody>

@@ -20,7 +20,7 @@
             <tbody>
                 {% for faculty in faculties %} 
                 <tr>
-                    <th>{{faculty.user}}</th>
+                    <th><a href="/admin/EventGeneration/faculty/{{faculty.pk}}">{{faculty.user}}</a></th>
                     <th>{{faculty.user.first_name}}</th>
                     <th>{{faculty.user.last_name}}</th>
                     <th>{{faculty.designation}}</th>
@@ -30,8 +30,8 @@
                     <th>No</th>
                     {% endif %}
                     <th>{{faculty.user.email}}</th>
-                    <th><button>Edit</button></th>
-                    <th><button>delete</button></th>
+                    <!-- <th><button>Edit</button></th>
+                    <th><button>delete</button></th> -->
                 </tr>
                 {% endfor %}
             </tbody>
