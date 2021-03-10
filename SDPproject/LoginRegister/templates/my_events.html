@@ -19,11 +19,7 @@
                 {% for event in my_events %} 
                 <tr>
                     {% if not user.is_student %}
-<<<<<<< HEAD
                     <th><a href="/my_assignment/{{event.id}}/team_list"> <h5> {{event.Title}} </h5> </a></th>
-=======
-                    <th><a href="/team_list/{{event.id}}"> <h5> {{event.Title}} </h5> </a></th>
->>>>>>> 31c38185ec1f4c293ee8d09aeea96d7b0e8e8183
                     {% else %}
                     <th> <a href="/my_assignment/{{event.id}}"> <h5> {{event.Title}} </h5> </a></th>
                     {% endif %}

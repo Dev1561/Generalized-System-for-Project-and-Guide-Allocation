@@ -132,17 +132,12 @@ def team_created(request):
     return render(request, 'team_created.html')
 
 def team_list(request,pk):
-<<<<<<< HEAD
     event = event_models.Event.objects.get(pk=pk)
     is_head = False
     if event.event_head.user.username == str(request.user):
         is_head = True
     team_data = Team.objects.filter(event=event)
     return render(request, 'team_list.html', {'team_data':team_data, 'is_head':is_head} )
-=======
-    team_data = Team.objects.all()
-    return render(request, 'team_list.html', {'team_data':team_data, 'pk':pk} )
->>>>>>> 31c38185ec1f4c293ee8d09aeea96d7b0e8e8183
 
 def own_project(request,pk):
     if(request.method == 'POST'):
