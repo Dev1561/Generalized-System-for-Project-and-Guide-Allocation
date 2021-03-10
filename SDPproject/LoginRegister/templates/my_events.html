@@ -19,7 +19,11 @@
                 {% for event in my_events %} 
                 <tr>
                     {% if not user.is_student %}
+<<<<<<< HEAD
                     <th><a href="/my_assignment/{{event.id}}/team_list"> <h5> {{event.Title}} </h5> </a></th>
+=======
+                    <th><a href="/team_list/{{event.id}}"> <h5> {{event.Title}} </h5> </a></th>
+>>>>>>> 31c38185ec1f4c293ee8d09aeea96d7b0e8e8183
                     {% else %}
                     <th> <a href="/my_assignment/{{event.id}}"> <h5> {{event.Title}} </h5> </a></th>
                     {% endif %}
@@ -27,9 +31,10 @@
                     <th>{{event.start_date}}</th>
                     <th>{{event.end_date}}</th>
                     {% if user.is_student %}
-                    <th><a href="/my_assignment/{{event.id}}/create_team">create team</a></th>
-                    <th><a href="/my_assignment/{{event.id}}/own_definition">add own project</a></th>
+                    <th><a href="/my_assignment/{{event.id}}/create_team"> Create Team </a></th>
+                    <th><a href="/my_assignment/{{event.id}}/own_definition"> Add Own Project </a></th>
                     {% else %}
+                    <th> <a href="/add_project/{{event.id}}"> Add Project </a> </th>
                     {% endif %}
                 {% endfor %}
                 </tr>

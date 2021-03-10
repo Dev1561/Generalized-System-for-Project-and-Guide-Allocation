@@ -80,41 +80,50 @@ def validate_team(request,pk):
             messages.info(request, "Team cannot be created")
             return redirect('/create_team')
         else:
-            max_cpi = max(mem1.cpi, mem2.cpi, mem3.cpi)
-            team = Team()
-            curr_event = event_models.Event.objects.get(pk=pk)
-            team.event = curr_event
-            team.member1 = mem1
-            team.member2 = mem2
-            team.member3 = mem3
-            team.preference1 = choice1
-            team.preference2 = choice2
-            team.preference3 = choice3
-            team.preference4 = choice4
-            team.preference5 = choice5
-            team.highest_cpi = max_cpi
-            team.save()
-            print("Team Created")
-            return redirect('/team_created')
+            if(Team.objects.filter(member1=mem1).exists() or Team.objects.filter(member2=mem2).exists() or Team.objects.filter(member3=mem3).exists()):
+                messages.info(request, "Member already part of another team")
+                return
+            else:
+                max_cpi = max(mem1.cpi, mem2.cpi, mem3.cpi)
+                team = Team()
+                curr_event = event_models.Event.objects.get(pk=pk)
+                team.event = curr_event
+                team.member1 = mem1
+                team.member2 = mem2
+                team.member3 = mem3
+                team.preference1 = choice1
+                team.preference2 = choice2
+                team.preference3 = choice3
+                team.preference4 = choice4
+                team.preference5 = choice5
+                team.highest_cpi = max_cpi
+                team.save()
+                print("Team Created")
+                return redirect('/team_created')
     else:
         if( ( float(mem1.cpi) - float(mem2.cpi) ) > 0.5 ):
             messages.info(request, "Team cannot be created")
             return redirect('/create_team')
         else:
-            max_cpi = max(mem1.cpi, mem2.cpi)
-            team = Team()
-            team.member1 = mem1
-            team.member2 = mem2
-            team.member3 = mem3
-            team.preference1 = choice1
-            team.preference2 = choice2
-            team.preference3 = choice3
-            team.preference4 = choice4
-            team.preference5 = choice5
-            team.highest_cpi = max_cpi
-            team.save()
-            print("Team Created")
-            return redirect('/team_created')
+            if(Team.objects.filter(member1=mem1).exists() or Team.objects.filter(member2=mem2).exists()):
+                messages.info(request, "Member already part of another team")
+                return
+            else:
+                max_cpi = max(mem1.cpi, mem2.cpi)
+                team = Team()
+                curr_event = event_models.Event.objects.get(pk=pk)
+                team.event = curr_event
+                team.member1 = mem1
+                team.member2 = mem2
+                team.preference1 = choice1
+                team.preference2 = choice2
+                team.preference3 = choice3
+                team.preference4 = choice4
+                team.preference5 = choice5
+                team.highest_cpi = max_cpi
+                team.save()
+                print("Team Created")
+                return redirect('/team_created')
 
     return render(request, 'base.html')
 
@@ -123,12 +132,17 @@ def team_created(request):
     return render(request, 'team_created.html')
 
 def team_list(request,pk):
+<<<<<<< HEAD
     event = event_models.Event.objects.get(pk=pk)
     is_head = False
     if event.event_head.user.username == str(request.user):
         is_head = True
     team_data = Team.objects.filter(event=event)
     return render(request, 'team_list.html', {'team_data':team_data, 'is_head':is_head} )
+=======
+    team_data = Team.objects.all()
+    return render(request, 'team_list.html', {'team_data':team_data, 'pk':pk} )
+>>>>>>> 31c38185ec1f4c293ee8d09aeea96d7b0e8e8183
 
 def own_project(request,pk):
     if(request.method == 'POST'):
@@ -194,7 +208,7 @@ def own_project(request,pk):
             return render(request, 'add_own_project.html', {'faculties':faculties})
 
 
-def allocated_projects(request):
+def allocated_projects(request,pk):
     i = 0
     team_data = Team.objects.all()
     sorted_team_data = Team.objects.order_by('-highest_cpi')
@@ -223,7 +237,8 @@ def allocated_projects(request):
     for project in allocated:
         print("\n", project)
         allc_proj = Allocated_Project()
-        # allc_proj.event_id = 
+        curr_event = event_models.Event.objects.get(pk=pk)
+        allc_proj.event_id = curr_event
         allc_proj.team_id = Team.objects.get(pk=project[0])
         allc_proj.project = Project.objects.get(title=project[1])
         allc_proj.save()
@@ -267,3 +282,29 @@ def process_request(request,pk):
         return redirect('/guide_requests')
     else:
         return render(request, 'request.html', {'guide_pref':guide_pref})
+
+def add_project(request,pk):
+    if(request.method == 'POST'):
+        title = request.POST['title']
+        description = request.POST['description']
+
+        if(title == '' or description == ''):
+            messages.info(request, "All fields are compulsory...")
+            return render(request, 'add_project.html')
+        else:
+            if(Project.objects.filter(title=title).exists()):
+                messages.info(request, "Project with same title already exists...")
+                return render(request, 'add_project.html')
+            else:
+                user = event_models.User.objects.get(username=request.user)
+                guide = event_models.Faculty.objects.get(user=user)
+                project = Project()
+                project.title = title
+                project.description = description
+                project.guide = guide
+                project.owner = user
+                project.save()
+
+                return redirect("/my_assignments")
+    else:
+        return render(request, 'add_project.html')                
