@@ -11,4 +11,5 @@ urlpatterns = [
     path('my_assignment/<int:pk>/own_project', views.own_project),
     path('allocated_projects/<int:pk>', views.allocated_projects),
     path('add_project/<int:pk>', views.add_project),
+    path('allocated_projects', views.allocated_data),
 ]

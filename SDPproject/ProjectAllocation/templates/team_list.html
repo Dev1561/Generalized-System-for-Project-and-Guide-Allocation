@@ -40,8 +40,16 @@
     <div class="col-md-2"> </div>
     <div class="col-md-8 justify-content-center">
         {%if is_head %}
-        <a href="/allocated_projects" class="justify-content-center btn btn-primary"> Allocate Projects </a>
+        <a href="/allocated_projects/{{pk}}" class="justify-content-center btn btn-primary"> Allocate Projects </a>
         {% endif %}
+    </div>
+</div>
+<div class="row align-items-center">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 justify-content-center"> 
+        {% for message in messages %}
+        <h3 style="color: red;"> {{message}} </h3>
+        {% endfor %}
     </div>
 </div>
 

@@ -137,7 +137,7 @@ def team_list(request,pk):
     if event.event_head.user.username == str(request.user):
         is_head = True
     team_data = Team.objects.filter(event=event)
-    return render(request, 'team_list.html', {'team_data':team_data, 'is_head':is_head} )
+    return render(request, 'team_list.html', {'team_data':team_data, 'is_head':is_head, 'pk':pk} )
 
 def own_project(request,pk):
     if(request.method == 'POST'):
@@ -231,6 +231,9 @@ def allocated_projects(request,pk):
 
     for project in allocated:
         print("\n", project)
+        if ( Allocated_Project.objects.filter(event_id=pk).exists() ) :
+            return HttpResponse("Project Allocation already done for this event..!")
+
         allc_proj = Allocated_Project()
         curr_event = event_models.Event.objects.get(pk=pk)
         allc_proj.event_id = curr_event
@@ -302,4 +305,12 @@ def add_project(request,pk):
 
                 return redirect("/my_assignments")
     else:
-        return render(request, 'add_project.html')                
+        return render(request, 'add_project.html')  
+
+
+def allocated_data(request):
+    user = event_models.Mapping.objects.get(user_id=request.user)
+    allocated_data = Allocated_Project.objects.filter(event_id=user.event_id)
+    print(allocated_data)
+    # return HttpResponse(allocated_data.team_id.member1.user.username)
+    return render(request, 'allocated_project.html', {'allocated_data':allocated_data})
