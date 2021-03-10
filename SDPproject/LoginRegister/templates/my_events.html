@@ -19,7 +19,7 @@
                 {% for event in my_events %} 
                 <tr>
                     {% if not user.is_student %}
-                    <th><a href="/team_list"> <h5> {{event.Title}} </h5> </a></th>
+                    <th><a href="/my_assignment/{{event.id}}/team_list"> <h5> {{event.Title}} </h5> </a></th>
                     {% else %}
                     <th> <a href="/my_assignment/{{event.id}}"> <h5> {{event.Title}} </h5> </a></th>
                     {% endif %}
