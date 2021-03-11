@@ -302,7 +302,6 @@ def add_project(request,pk):
                 project.guide = guide
                 project.owner = user
                 project.save()
-
                 return redirect("/my_assignments")
     else:
         return render(request, 'add_project.html')  
