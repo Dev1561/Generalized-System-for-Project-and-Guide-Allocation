@@ -1,0 +1,30 @@
+{% extends 'stu_base.html' %}
+
+
+{% block content %}
+<div class="row align-items-center">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 justify-content-center">
+        <table class="table table-dark" style="margin-top: 50px;">
+            <thead>
+                <tr>
+                    <th><h4>Project Title</h4></th>
+                    <th><h4>Description</h4></th>
+                    <th><h4>Guide</h4></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %} 
+                <tr>
+                    <th>{{project.title}}</th>
+                    <th>{{project.description}}</th>
+                    <th>{{project.guide.user.username}}</th>
+                {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+{% endblock %}

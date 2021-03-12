@@ -1,8 +1,8 @@
-{% extends 'new_base.html' %}
+{% extends 'stu_base.html' %}
 
 
 {% block content %}
-{% if user.is_authenticated %}
+{% if user.is_authenticated and user.is_student %}
 <div class="row align-items-center">
     <div class="col-md-2"></div>
     <div class="col-md-4 justify-content-center">

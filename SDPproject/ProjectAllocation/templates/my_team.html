@@ -1,0 +1,99 @@
+{% extends 'stu_base.html' %}
+{% block content %}
+
+{% if user.is_authenticated and user.is_student %}
+    <div class="row align-items-center">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 justify-content-center bg-primary">
+            <br/> <br/> <h2> Team Data </h2>
+            <hr/>
+
+            <dl class="row">
+                <dt class="col-sm-2">
+                    Member1 : 
+                </dt>
+                <dd class="col-sm-10 text-light"> 
+                    {{team.member1.user.get_full_name}} ({{team.member1.user.username}})
+                </dd>
+                <dt class="col-sm-2">
+                    Member2 : 
+                </dt>
+                <dd class="col-sm-10 text-light"> 
+                    {{team.member2.user.get_full_name}} ({{team.member2.user.username}})
+                </dd>
+                <dt class="col-sm-2">
+                    Member3 : 
+                </dt>
+                <dd class="col-sm-10 text-light"> 
+                    {{team.member3.user.get_full_name}} ({{team.member3.user.username}})
+                </dd>
+                <dt class="col-sm-2">
+                    Preference1 : 
+                </dt>
+                <dd class="col-sm-10 text-light"> 
+                    {{team.preference1.title}}
+                </dd>
+                <dt class="col-sm-2">
+                    Preference2 : 
+                </dt>
+                <dd class="col-sm-10 text-light"> 
+                    {{team.preference2.title}}
+                </dd>
+                <dt class="col-sm-2">
+                    Preference3 : 
+                </dt>
+                <dd class="col-sm-10 text-light"> 
+                    {{team.preference3.title}}
+                </dd>
+                <dt class="col-sm-2">
+                    Preference4 : 
+                </dt>
+                <dd class="col-sm-10 text-light"> 
+                    {{team.preference4.title}}
+                </dd>
+                <dt class="col-sm-2">
+                    Preference5 : 
+                </dt>
+                <dd class="col-sm-10 text-light"> 
+                    {{team.preference5.title}}
+                </dd>
+            </dl>
+        </div>
+    </div>
+    {% if allocation %}
+    <div class="row align-items-center">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 justify-content-center bg-primary">
+            <br/> <br/> <h2> Project Allocation </h2>
+            <hr/>
+            <dl class="row">
+                <dt class="col-sm-3">
+                    Allocated project : 
+                </dt>
+                <dd class="col-sm-9 text-light"> 
+                   {{allocation.project.title}}
+                </dd>
+                <dt class="col-sm-3">
+                    Guide : 
+                </dt>
+                <dd class="col-sm-9 text-light"> 
+                   {{allocation.project.guide.user.username}}
+                </dd>
+            </dl>
+            <div class="card-footer">
+                <a href="/my_assignments" class="btn btn-dark"> Back </a>
+            </div>
+            {% for message in messages %}
+            <h3 style="color: red;"> {{message}} </h3>
+            {% endfor %}
+        </div>
+    </div>
+    
+    {% endif %}
+{% else %}
+<h3> You are not logged in the system... </h3>
+<hr/>
+<h5> <a href="/" > Click here </a> to Login </h5>
+{% endif %}
+
+{% endblock %}

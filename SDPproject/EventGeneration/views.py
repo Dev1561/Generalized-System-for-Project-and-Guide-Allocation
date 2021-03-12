@@ -34,6 +34,26 @@ def participants(request,pk):
         
     return render(request, 'participants_list.html', {'students':students, 'faculties':faculties})
 
+def participants1(request,pk):
+    event = Event.objects.get(pk=pk)
+    mapped_objects = Mapping.objects.all()
+    students = []
+    faculties = []
+    for obj in list(mapped_objects):
+        #print(obj.event_id)
+        print(obj.user_id)
+        if obj.event_id == event:
+            user = User.objects.get(username=obj.user_id)
+            if user.is_student:
+                stu = Student.objects.get(user=obj.user_id)
+                students.append(stu)
+                #print(stu.roll_no)
+            else:
+                fac = Faculty.objects.get(user=obj.user_id)
+                faculties.append(fac)
+        
+    return render(request, 'participants_list1.html', {'students':students, 'faculties':faculties, 'event':event})
+
 def Faculties(request):
     # event_data = Event.objects.all()
     # user_faculty = User.objects.get(username = "SDP")

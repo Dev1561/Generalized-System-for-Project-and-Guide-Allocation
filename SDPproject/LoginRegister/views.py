@@ -39,27 +39,9 @@ def show_my_events(request):
     print(my_events)
     return render(request, 'my_events.html', {'my_events':my_events})
 
-# def my_event(request,pk):
-#     event = Event.objects.get(pk=pk)
-#     mapped_objects = Mapping.objects.all()
-#     students = []
-#     faculties = []
-#     for obj in list(mapped_objects):
-#         #print(obj.event_id)
-#         print(obj.user_id)
-#         if obj.event_id == event:
-#             user = User.objects.get(username=obj.user_id)
-#             if user.is_student:
-#                 stu = Student.objects.get(user=obj.user_id)
-#                 students.append(stu)
-#                 #print(stu.roll_no)
-#             else:
-#                 fac = Faculty.objects.get(user=obj.user_id)
-#                 faculties.append(fac)
-        
-#     return render(request, 'participants_list.html', {'students':students, 'faculties':faculties})
-    
-    
+def my_event(request,pk):
+    curr_event = event_models.Event.objects.get(pk=pk)
+    return render(request, 'stu_base.html', {'event':curr_event})
 
 def Register(request):
     

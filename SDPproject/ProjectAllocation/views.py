@@ -14,13 +14,22 @@ def CreateTeam(request,pk):
     teams = Team.objects.filter(event=curr_event)
     curr_user = event_models.User.objects.get(username=request.user)
     stu = event_models.Student.objects.get(user=curr_user)
+    allocated_list = list(Allocated_Project.objects.filter(event_id=curr_event))
+    my_team = None
+    allocated_project = None
+    if allocated_list:
+        print(allocated_list)
     Flag = False
     for team in teams:
         if team.member1 == stu or team.member2 == stu or team.member3 == stu:
             Flag = True
+            my_team = team
             break
     if Flag == True:
-        return HttpResponse("you are already a part of team")
+        for allocation in allocated_list:
+            if allocation.team_id == my_team and allocation.event_id == my_team.event:
+                allocated_project = allocation
+        return render(request, 'my_team.html', {'team':my_team, 'event':curr_event, 'allocation':allocated_project})
     else:
         mappings = event_models.Mapping.objects.filter(event_id=curr_event)
         facs = []
@@ -37,7 +46,20 @@ def CreateTeam(request,pk):
         my_projects = list(Project.objects.filter(owner=curr_user))
         for proj in my_projects:
             projects.append(proj)
-        return render(request, 'create_team.html', {'projects':projects,'flag':Flag})
+        return render(request, 'create_team.html', {'projects':projects,'flag':Flag, 'event':curr_event})
+
+def projects(request,pk):
+    curr_event = event_models.Event.objects.get(pk=pk)
+    mappings = event_models.Mapping.objects.filter(event_id=curr_event)
+    projects = []
+    for mapping in list(mappings):
+        if not mapping.user_id.is_student:
+            fac = event_models.Faculty.objects.get(user=mapping.user_id)
+            p_list = Project.objects.filter(guide=fac)
+            for p in p_list:
+                if p.own_def == False:
+                    projects.append(p)
+    return render(request, 'projects_list.html', {'projects':projects, 'event':curr_event})
 
 def validate_team(request,pk):
     member1 = request.POST['member1']
@@ -192,7 +214,8 @@ def own_project(request,pk):
                 Flag = True
                 break
         if Flag == True:
-            return HttpResponse("you are already a part of team")
+            messages.info(request, "you cannot add own project after team creation")
+            return redirect("teams", pk=event.id)
         else:
             mappings = event_models.Mapping.objects.filter(event_id=event)
             faculties = []
@@ -200,7 +223,7 @@ def own_project(request,pk):
                 print(type(mapping.user_id))
                 if not mapping.user_id.is_student:
                     faculties.append(mapping.user_id.username)
-            return render(request, 'add_own_project.html', {'faculties':faculties})
+            return render(request, 'add_own_project.html', {'faculties':faculties, 'event':event})
 
 
 def allocated_projects(request,pk):
@@ -281,7 +304,7 @@ def process_request(request,pk):
     else:
         return render(request, 'request.html', {'guide_pref':guide_pref})
 
-def add_project(request,pk):
+def add_project(request):
     if(request.method == 'POST'):
         title = request.POST['title']
         description = request.POST['description']

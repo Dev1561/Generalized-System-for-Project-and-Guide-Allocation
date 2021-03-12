@@ -31,27 +31,24 @@
                     <a class="nav-item nav-link" href="/create_project_assignment">Add assignment</a>
                     <a class="nav-item nav-link" href="/projects">projects</a>
                     {% endif %}
-                    {% if not user.is_student and user.is_authenticated %}
-                    <a class="nav-item nav-link" href="/guide_requests">Guide Req</a>
-                    <a class="nav-item nav-link" href="/allocated_projects"> View allocated projects </a>
-                    <a class="nav-item nav-link" href="/add_project">Add project</a>
-                    {% endif %}
-                    {% if user.is_student and user.is_authenticated and not user.is_superuser%}
+                    {% if user.is_student and user.is_authenticated %}
                     <a class="nav-item nav-link" href="/my_assignments">Home</a>
+                    <a class="nav-item nav-link" href="/my_assignment/{{event.id}}/team">Team</a>
+                    <a class="nav-item nav-link" href="/my_assignment/{{event.id}}/own_definition">add own project</a>
+                    <a class="nav-item nav-link" href="/my_assignment/{{event.id}}/participants">participants</a>
+                    <a class="nav-item nav-link" href="/my_assignment/{{event.id}}/projects_list">Projects</a>
                     {% endif %}
+
                 </div>
             </div>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                 {% if user.is_authenticated %}
-                    {%if user.is_superuser %}
-                    <div class="navbar-nav">
-                        <a class="nav-item nav-link" href="#"> Hello Admin </a>
-                    </div>
-                    {% else %}
-                    <div class="navbar-nav">
-                        <a class="nav-item nav-link" href="/profile"> Hello {{user.username}} </a>
-                    </div>
-                    {% endif %}
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="#">{{event.Title}} </a>
+                </div>
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="/profile"> Hello {{user.username}} </a>
+                </div>
                 <div class="navbar-nav">
                     <a class="nav-item nav-link" href="/logout">Logout</a>
                 </div>
