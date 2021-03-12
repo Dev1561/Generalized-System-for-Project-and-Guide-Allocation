@@ -39,8 +39,8 @@
 <div class="row align-items-center">
     <div class="col-md-2"> </div>
     <div class="col-md-8 justify-content-center">
-        {%if is_head %}
-        <a href="/allocated_projects/{{pk}}" class="justify-content-center btn btn-primary"> Allocate Projects </a>
+        {%if is_head and not is_allocated %}
+        <a id="allocate_button" href="/allocated_projects/{{pk}}" class="justify-content-center btn btn-primary"> Allocate Projects </a>
         {% endif %}
     </div>
 </div>

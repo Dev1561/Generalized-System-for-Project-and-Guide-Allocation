@@ -12,6 +12,7 @@
                     <th><h4>Team id</h4></th>
                     <th><h4>Team members</h4></th>
                     <th><h4>Project Title</h4></th>
+                    <th><h4>Guide</h4></th>
                 </tr>
             </thead>
             <tbody>
@@ -20,6 +21,7 @@
                     <th>{{object.team_id.id}}</th>
                     <th>{{object.team_id.member1.user.username}},{{object.team_id.member2.user.username}},{{object.team_id.member3.user.username}}</th>
                     <th>{{object.project.title}}</th>
+                    <th>{{object.project.guide.user.username}}</th>
                 {% endfor %}
                 </tr>
             </tbody>

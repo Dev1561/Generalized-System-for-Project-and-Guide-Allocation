@@ -52,7 +52,7 @@ def profile_updated(request):
             else:
                 messages.info(request, "User record not found in the database!!!")
                 return redirect('/edit_profile')
-            return render(request, 'profile_updated.html')
+            return redirect('/profile')
 
     elif(request.user.is_student == False):
         fac_username = request.POST['username']
@@ -86,7 +86,7 @@ def profile_updated(request):
             else:
                 messages.info(request, "User record not found in the database!!")
                 return redirect('/edit_profile')
-            return render(request, 'profile_updated.html')
+            return redirect('/profile')
 
 
 def edit_profile(request):

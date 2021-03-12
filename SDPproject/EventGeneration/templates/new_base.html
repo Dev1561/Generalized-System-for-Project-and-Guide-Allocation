@@ -32,6 +32,7 @@
                     <a class="nav-item nav-link" href="/projects">projects</a>
                     {% endif %}
                     {% if not user.is_student and user.is_authenticated %}
+                    <a class="nav-item nav-link" href="/my_assignments">Home</a>
                     <a class="nav-item nav-link" href="/guide_requests">Guide Req</a>
                     <a class="nav-item nav-link" href="/add_project">Add project</a>
                     <a class="nav-item nav-link" href="/my_projects">My projects</a>

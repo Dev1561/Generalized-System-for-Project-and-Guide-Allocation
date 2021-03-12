@@ -124,6 +124,6 @@ def faculty_register(request):
                 faculty.designation = designation
                 faculty.available = available
                 faculty.save()
-                return redirect('/assignments')
+                return redirect('/faculty_login')
     else:
         return render(request, 'faculty_register.html')
