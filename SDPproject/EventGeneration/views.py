@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from .models import Student, Event, User, Mapping, Faculty
-from ProjectAllocation.models import Project
+from ProjectAllocation.models import Project, Team, Allocated_Project
 import csv
 import io
 
@@ -73,9 +73,26 @@ def Students(request):
     students_list.sort(key = lambda Student: Student.user.first_name)
     return render(request, 'student_list.html', {'students':students_list})
 
+def admin_team_list(request,pk):
+    event = Event.objects.get(pk=pk)
+    team_data = Team.objects.filter(event=event)
+    return render(request, 'admin_team_list.html', {'team_data':team_data, 'event':event})
+
 def projects(request):
     projects = Project.objects.all()
     return render(request, 'projects.html', {'projects':projects})
+
+def project_allocation_list(request,pk):
+    event = Event.objects.get(pk=pk)
+    allocation_list = Allocated_Project.objects.filter(event_id=event)
+    if not len(list(allocation_list)):
+        messages.info(request, "project allocation is not yet done")
+        if request.user.is_superuser:
+            return redirect("admin_team_list", pk=event.id)
+        else:
+            return redirect('/my_assignments')
+    else:
+        return render(request, 'allocation_list.html', {'allocation_list':allocation_list, 'event':event})
 
 def create_project_assignment(request):
     if request.method == 'POST':

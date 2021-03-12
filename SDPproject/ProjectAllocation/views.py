@@ -102,50 +102,42 @@ def validate_team(request,pk):
             messages.info(request, "Team cannot be created")
             return redirect('/create_team')
         else:
-            if(Team.objects.filter(member1=mem1).exists() or Team.objects.filter(member2=mem2).exists() or Team.objects.filter(member3=mem3).exists()):
-                messages.info(request, "Member already part of another team")
-                return
-            else:
-                max_cpi = max(mem1.cpi, mem2.cpi, mem3.cpi)
-                team = Team()
-                curr_event = event_models.Event.objects.get(pk=pk)
-                team.event = curr_event
-                team.member1 = mem1
-                team.member2 = mem2
-                team.member3 = mem3
-                team.preference1 = choice1
-                team.preference2 = choice2
-                team.preference3 = choice3
-                team.preference4 = choice4
-                team.preference5 = choice5
-                team.highest_cpi = max_cpi
-                team.save()
-                print("Team Created")
-                return redirect('/team_created')
+            max_cpi = max(mem1.cpi, mem2.cpi, mem3.cpi)
+            team = Team()
+            curr_event = event_models.Event.objects.get(pk=pk)
+            team.event = curr_event
+            team.member1 = mem1
+            team.member2 = mem2
+            team.member3 = mem3
+            team.preference1 = choice1
+            team.preference2 = choice2
+            team.preference3 = choice3
+            team.preference4 = choice4
+            team.preference5 = choice5
+            team.highest_cpi = max_cpi
+            team.save()
+            print("Team Created")
+            return render(request, 'team_created.html', {'event': curr_event})
     else:
         if( ( float(mem1.cpi) - float(mem2.cpi) ) > 0.5 ):
             messages.info(request, "Team cannot be created")
             return redirect('/create_team')
         else:
-            if(Team.objects.filter(member1=mem1).exists() or Team.objects.filter(member2=mem2).exists()):
-                messages.info(request, "Member already part of another team")
-                return
-            else:
-                max_cpi = max(mem1.cpi, mem2.cpi)
-                team = Team()
-                curr_event = event_models.Event.objects.get(pk=pk)
-                team.event = curr_event
-                team.member1 = mem1
-                team.member2 = mem2
-                team.preference1 = choice1
-                team.preference2 = choice2
-                team.preference3 = choice3
-                team.preference4 = choice4
-                team.preference5 = choice5
-                team.highest_cpi = max_cpi
-                team.save()
-                print("Team Created")
-                return redirect('/team_created')
+            max_cpi = max(mem1.cpi, mem2.cpi)
+            team = Team()
+            curr_event = event_models.Event.objects.get(pk=pk)
+            team.event = curr_event
+            team.member1 = mem1
+            team.member2 = mem2
+            team.preference1 = choice1
+            team.preference2 = choice2
+            team.preference3 = choice3
+            team.preference4 = choice4
+            team.preference5 = choice5
+            team.highest_cpi = max_cpi
+            team.save()
+            print("Team Created")
+            return render(request, 'team_created.html', {'event':curr_event})
 
     return render(request, 'base.html')
 
@@ -329,10 +321,7 @@ def add_project(request):
     else:
         return render(request, 'add_project.html')  
 
-
-def allocated_data(request):
-    user = event_models.Mapping.objects.get(user_id=request.user)
-    allocated_data = Allocated_Project.objects.filter(event_id=user.event_id)
-    print(allocated_data)
-    # return HttpResponse(allocated_data.team_id.member1.user.username)
-    return render(request, 'allocated_project.html', {'allocated_data':allocated_data})
+def my_projects(request):
+    fac = event_models.Faculty.objects.get(user=request.user)
+    projects = Project.objects.filter(guide=fac)
+    return render(request, 'my_projects.html', {'projects':projects})

@@ -1,0 +1,38 @@
+{% extends 'new_base.html' %} 
+
+{% block content %}
+
+{% if user.is_authenticated and not user.is_student %}
+<div class="row align-items-center">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 justify-content-center">
+        <table class="table table-dark" style="margin-top: 50px;">
+            <thead>
+                <tr>
+                    <th><h4>Project Title</h4></th>
+                    <th><h4>Description</h4></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %} 
+                <tr>
+                    <th>{{project.title}}</th>
+                    <th>{{project.description}}</th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% for message in messages %}
+        <h3 style="color: red;"> {{message}} </h3>
+        {% endfor %}
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+{% else %}
+    <h3> You are not logged in the system... </h3>
+    <hr/>
+    <h5> <a href="/login" > Click here </a> to Login </h5>
+{% endif %}
+
+{% endblock%}
