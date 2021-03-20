@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'LoginRegister',
     'ProjectAllocation',
     'ProfileManagement',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -83,6 +84,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}
+
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,
 }
 
 AUTH_USER_MODEL='EventGeneration.User'

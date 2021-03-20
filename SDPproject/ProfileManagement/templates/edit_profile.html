@@ -5,24 +5,24 @@
 {% if user.is_authenticated %}
     <div class="row align-items-center">
         <div class="col-md-2"> </div>
-        <div class="col-md-8 justify-content-center bg-primary">
-            <br> <br> <h2> Update Profile </h2> <hr>
+        <div class="col-md-8 justify-content-center" style="opacity:0.9; background-color:#141414ee; border-radius:20px;">
+            <br> <br> <h2 class="text-primary"> Update Profile </h2> <hr>
             <form action="profile_updated" method="POST">
                 {% csrf_token %}
                 <dl class="row">
-                    <dt class="col-sm-2"> Username : </dt>
+                    <dt class="col-sm-2 text-muted"> Username : </dt>
                     <input type="text" class="class-sm-10" name="username" value={{user.get_username}}>
                 </dl>
                 <dl class="row">
-                    <dt class="col-sm-2"> First Name  : </dt>
+                    <dt class="col-sm-2 text-muted"> First Name  : </dt>
                     <input type="text" class="class-sm-10" name="fname" value="{{user.get_first_name}}">
                 </dl>
                 <dl class="row">
-                    <dt class="col-sm-2"> Last Name  : </dt>
+                    <dt class="col-sm-2 text-muted"> Last Name  : </dt>
                     <input type="text" class="class-sm-10" name="lname" value="{{user.get_last_name}}">
                 </dl>
                 <dl class="row">
-                    <dt class="col-sm-2"> Email ID  : </dt>
+                    <dt class="col-sm-2 text-muted"> Email ID  : </dt>
                     <input type="text" class="class-sm-10" name="email" value="{{user.email}}">
                 </dl>
 
@@ -44,11 +44,11 @@
                 
                 {% if user.is_student %}
                     <dl class="row">
-                        <dt class="col-sm-2"> Roll No  : </dt>
+                        <dt class="col-sm-2 text-muted"> Roll No  : </dt>
                         <input type="text" class="class-sm-10" name="roll_no" value="{{loggedin_user.roll_no}}">
                     </dl>
                     <dl class="row">
-                        <dt class="col-sm-2"> CPI : </dt>
+                        <dt class="col-sm-2 text-muted"> CPI : </dt>
                         <input type="text" class="class-sm-10" name="cpi" value="{{loggedin_user.cpi}}">
                     </dl>
                     <!-- <div class="form-group">
@@ -61,11 +61,11 @@
                     </div> -->
                 {% else %}
                     <dl class="row">
-                        <dt class="col-sm-2"> Designation : </dt>
-                        <input type="text" class="class-sm-10" name="designation">
+                        <dt class="col-sm-2 text-muted"> Designation : </dt>
+                        <input type="text" class="class-sm-10" name="designation" value="{{loggedin_user.designation}}">
                     </dl>
                     <dl class="row">
-                        <dt class="col-sm-2"> Available : </dt>
+                        <dt class="col-sm-2 text-muted"> Available : </dt>
                         <select id="available" name="available">
                             <option val="1"> --Availability-- </option>
                             <option val="2"> True </option>

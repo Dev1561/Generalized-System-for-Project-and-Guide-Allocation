@@ -175,7 +175,7 @@ def team_list(request,pk):
     if event.event_head.user.username == str(request.user):
         is_head = True
     team_data = Team.objects.filter(event=event)
-    return render(request, 'team_list.html', {'team_data':team_data, 'is_head':is_head, 'pk':pk, 'is_allocated':is_allocated} )
+    return render(request, 'team_list.html', {'team_data':team_data, 'is_head':is_head, 'pk':pk, 'is_allocated':is_allocated, 'event':event} )
 
 def own_project(request,pk):
     if(request.method == 'POST'):

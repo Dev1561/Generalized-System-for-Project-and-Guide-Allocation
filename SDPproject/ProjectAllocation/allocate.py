@@ -329,7 +329,7 @@ def allocate_project(_G):
 graph = {
         "Team1":{"sdp":5,"php":4,"jt":3, "oose":2, "sp":1},
         "Team2":{"sdp":5,"php":4,"sp":3, "jt":2, "oose":1},
-        "dk":{"sdp":5,"php":4,"jt":3, "se":2, "soc":1},
-        "taksh":{"jt":5,"se":4,"sp":3, "php":2, "sdp":1}
+        "Team3":{"sdp":5,"php":4,"jt":3, "se":2, "soc":1},
+        "Team4":{"jt":5,"se":4,"sp":3, "php":2, "sdp":1}
 } 
 allocate_project(graph)

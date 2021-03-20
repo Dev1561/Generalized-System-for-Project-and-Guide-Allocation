@@ -5,16 +5,16 @@
 {% if user.is_authenticated and not user.is_student %}
     <div class="row align-items-center">
         <div class="col-md-2"> </div>
-        <div class="col-md-8 justify-content-center bg-primary">
-            <br> <br> <h2> guide request </h2> <hr>
+        <div class="col-md-8 justify-content-center" style="opacity:0.9; background-color:#141414ee; border-radius:20px;">
+            <br> <br> <h2 class="text-primary"> guide request </h2> <hr>
             <form action="" method="POST">
                 {% csrf_token %}
                 <dl class="row">
-                    <dt class="col-sm-2"> Project title : </dt>
+                    <dt class="col-sm-2 text-muted"> Project title : </dt>
                     <input type="text" class="class-sm-10" name="project_title" value="{{guide_pref.project.title}}">
                 </dl>
                 <dl class="row">
-                    <dt class="col-sm-2">  Project Description : </dt>
+                    <dt class="col-sm-2 text-muted">  Project Description : </dt>
                     <input type="text" class="class-sm-10" name="project_description" height="100" size="50" value="{{guide_pref.project.description}}">
                 </dl>
                 <div class="card-footer align-items-center">

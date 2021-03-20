@@ -5,42 +5,42 @@
 {% if user.is_authenticated and user.is_student %}
     <div class="row align-items-center">
         <div class="col-md-2"></div>
-        <div class="col-md-8 justify-content-center bg-primary">
-            <br/> <br/> <h2> Profile Management </h2>
+        <div class="col-md-8 justify-content-center" style="opacity:0.9; background-color:#141414ee; border-radius:20px;">
+            <br/> <br/> <h2 class="text-primary"> Profile Management </h2>
             <hr/>
 
             <dl class="row">
-                <dt class="col-sm-2">
+                <dt class="col-sm-2 text-muted">
                     Username : 
                 </dt>
                 <dd class="col-sm-10 text-light"> 
                     {{student_data.user.username}}
                 </dd>
-                <dt class="col-sm-2">
+                <dt class="col-sm-2 text-muted">
                     First Name : 
                 </dt>
                 <dd class="col-sm-10 text-light"> 
                     {{student_data.user.first_name}}
                 </dd>
-                <dt class="col-sm-2">
+                <dt class="col-sm-2 text-muted">
                     Last Name : 
                 </dt>
                 <dd class="col-sm-10 text-light"> 
                     {{student_data.user.last_name}}
                 </dd>
-                <dt class="col-sm-2">
+                <dt class="col-sm-2 text-muted">
                     Email address : 
                 </dt>
                 <dd class="col-sm-10 text-light"> 
                     {{student_data.user.email}}
                 </dd>
-                <dt class="col-sm-2">
+                <dt class="col-sm-2 text-muted">
                     Roll No : 
                 </dt>
                 <dd class="col-sm-10 text-light"> 
                     {{student_data.roll_no}}
                 </dd>
-                <dt class="col-sm-2">
+                <dt class="col-sm-2 text-muted">
                     CPI : 
                 </dt>
                 <dd class="col-sm-10 text-light"> 
@@ -58,42 +58,42 @@
 {% elif user.is_authenticated and not user.is_student %}
     <div class="row align-items-center">
         <div class="col-md-2"></div>
-        <div class="col-md-8 justify-content-center bg-primary">
-            <br/> <br/> <h2> Profile Management </h2>
+        <div class="col-md-8 justify-content-center" style="opacity:0.9; background-color:#141414ee; border-radius:20px;">
+            <br/> <br/> <h2 class="text-primary"> Profile Management </h2>
             <hr/>
 
             <dl class="row">
-                <dt class="col-sm-2">
+                <dt class="col-sm-2 text-muted">
                     Username : 
                 </dt>
                 <dd class="col-sm-10 text-light"> 
                     {{faculty_data.user.username}}
                 </dd>
-                <dt class="col-sm-2">
+                <dt class="col-sm-2 text-muted">
                    First Name : 
                 </dt>
                 <dd class="col-sm-10 text-light"> 
                     {{faculty_data.user.first_name}}
                 </dd>
-                <dt class="col-sm-2">
+                <dt class="col-sm-2 text-muted">
                     Last Name : 
                 </dt>
                 <dd class="col-sm-10 text-light"> 
                     {{faculty_data.user.last_name}}
                 </dd>
-                <dt class="col-sm-2">
+                <dt class="col-sm-2 text-muted">
                     Email address : 
                 </dt>
                 <dd class="col-sm-10 text-light"> 
                     {{faculty_data.user.email}}
                 </dd>
-                <dt class="col-sm-2">
+                <dt class="col-sm-2 text-muted">
                     Designation : 
                 </dt>
                 <dd class="col-sm-10 text-light"> 
                     {{faculty_data.designation}}
                 </dd>
-                <dt class="col-sm-2">
+                <dt class="col-sm-2 text-muted">
                     Available : 
                 </dt>
                 <dd class="col-sm-10 text-light"> 

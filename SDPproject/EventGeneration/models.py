@@ -27,11 +27,6 @@ class Faculty(models.Model):
     designation = models.TextField(max_length=50)
     available = models.BooleanField(default=True)
     
-    #def __init__(self, *args, **kwargs):
-    #    super().__init__(*args, **kwargs)
-    #    faculty_user = User.objects.get(username = self.user)
-    #    faculty_user.is_faculty()
-    
 class Event(models.Model):
     Title = models.CharField(max_length=100)
     department = models.CharField(max_length=100)
